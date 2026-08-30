@@ -1,0 +1,28 @@
+=== SCENE 3 / 12 — INTERIOR, THE INVESTIGATOR AT WORK ===
+Technical settings: duration 12 seconds · aspect ratio 16:9 · resolution 0.7 MP (1152×640) · 24fps
+SCENE CONNECTIONS: <Picture 1> = face (character.png) [CONNECTED] · <Picture 2> = chain frame SCENE 2 [CONNECTED]
+— LINE BELOW = PROMPT SENT TO THE MODEL —
+
+This is an example of a well-formed, chained I2VA scene in full-reference style.
+It shows the format, the header, and the continuity discipline — adapt the content
+to your own story.
+
+subject_definitions:
+<Picture 1> is the face portrait of the investigator (around 40, short hair, wide shoulders) only in scenes where his face is on-screen and recognizable. <Picture 2> is the extracted final frame of SCENE 2 (the apartment interior), used as the exact first frame at 0.00 s.
+
+summary:
+[reference generation + keyframe completion] The target video begins exactly at <Picture 2> and continues from the established apartment. The investigator rises from the desk shown in <Picture 2>.
+
+retention_analysis:
+<Picture 1>: attribute_transfer (face identity, not exact lighting)
+<Picture 2>: fully_preserved (first frame state)
+
+detailed_description:
+Live-action cinematic, realistic; the investigator rises from the desk shown in <Picture 2>.
+[Shot 1] The camera holds a static shot as the man shown in <Picture 1> finishes typing, the room's green terminal light washing his face. He (S2) says in a measured voice: <d>[English] The access logs do not lie.</d>
+[Shot 2] At 00:06.000, the camera pans right with small amplitude at slow speed as he stands, keeps the progress bar at 65% (unchanged since the previous scene), and steps toward the doorway. The environment keeps the same cables, monitors, and green palette established before. He walks straight from the desk toward the door, never re-entering, without looking back.
+[Shot 3] At 00:10.500, the camera holds a static shot as the frame fades out to pure black, ready to hand off to the corridor scene.
+
+overall_soundscape: Faint computer fan hum and monitor buzz; his footsteps cross the room. Nothing else.
+
+non_diegetic_music: Sparse dark ambient drone, low sustained, maintaining quiet unease without melodic movement.

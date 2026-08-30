@@ -1,0 +1,143 @@
+# Instruções — MiniMax H3 opencode Prompt Director
+
+Guia passo a passo para carregar e usar o **assistant** e o **validator**, seguindo
+o fluxo de trabalho de cenas encadeadas. Versão em português; a versão original em
+inglês está em [`INSTRUCTIONS.md`](INSTRUCTIONS.md).
+
+---
+
+## 0. O que você precisa
+
+- Acesso ao **MiniMax H3** (API ou ComfyUI local com nós H3).
+- Um editor / runtime de agente capaz de colar um prompt de sistema longo
+  (**opencode**, qualquer chat que aceite prompt de sistema, ou um modelo local).
+- Os dois documentos complementares:
+  - `opencode_minimax_assistant.md` — o director de prompts (v6).
+  - `opencode_minimax_prompt_validator.md` — o verificador de consistência.
+- Opcional: sua **trama**, digitada na entrevista ou como **path de arquivo de
+  trama completo**.
+
+---
+
+## 1. Inicie o assistant
+
+1. Copie o **conteúdo inteiro** de `opencode_minimax_assistant.md` para o seu
+   agente como mensagem inicial de sistema/instrução (ou no primeiro turno do chat).
+2. O assistant começa uma **entrevista**. Ele segue:
+   - Seu **idioma** para a conversa.
+   - **Idioma de saída do prompt** (padrão: inglês — pressione Enter para aceitar).
+   - Falas em outro idioma são marcadas inline com `<d>[Lang]` — sem setting global
+     de diálogo.
+3. Responda às perguntas; escolha por **número**, por trecho, ou com seu próprio
+   texto. Um **⭐** marca o default recomendado.
+
+---
+
+## 2. Forneça a trama
+
+Dois caminhos:
+
+- **Inline:** responda às perguntas sobre trama, personagens, ambiente, ação,
+  câmera, diálogo, áudio.
+- **Por arquivo (recomendado para roteiros longos):** na pergunta de tipo de
+  entrada, escolha **⑦ path de arquivo de trama completa** e dê ao assistant o
+  caminho do seu arquivo. O assistant ainda coleta os parâmetros *técnicos*
+  (idioma, modo, duração, resolução, estilo de transição) pela entrevista.
+
+---
+
+## 3. Defina duração e tamanho de lote (VRAM)
+
+- Se você escolher um **total fixo** (ex.: 60 s), o assistant vai **perguntar
+  quantos segundos sua GPU renderiza por geração** (capacidade de lote por VRAM).
+- O total é então dividido para que toda cena ≤ esse `max_clip`, ou seja, cada
+  cena é um lote que cabe na sua GPU. Exemplo: 60 s ÷ 12 s/lote → **5 × 12 s**.
+- **Confirme o plano de lotes** antes de o assistant escrever os prompts.
+
+---
+
+## 4. Gere e receba os prompts
+
+- O assistant retorna prompts **prontos para enviar** ao MiniMax H3.
+- Para multi-cena: um bloco de código rotulado por `CENA` + o **mapa de conexão
+  de cena** + **instruções de encadeamento** (exportar quadro-final, anexar para a
+  próxima).
+- Todo cabeçalho de cena traz `Technical settings` e `SCENE CONNECTIONS`.
+
+---
+
+## 5. Rode o validator (faça isto antes de renderizar)
+
+1. **Peça ao seu agente que processe o validator no path onde estão os prompts
+   gerados** (ex.: `cenas-opencode/`) — nada de copiar/colar manualmente: o agente
+   aplica o `opencode_minimax_prompt_validator.md` sobre o diretório inteiro.
+2. **Passe pelo checklist de qualidade (§13)** e pelas regras que ele referencia,
+   além da cadeia entre cenas (§14).
+3. **Confirme:** timestamps de shots, rótulos de referência e chain frames, IDs de
+   falantes, diálogo verbatim, transições, continuidade física, texto em cena.
+
+**Bônus — validação em lote/por path (§14):** em vez de validar um prompt de cada
+vez manualmente, aponte o validator para o **diretório** que contém seus prompts
+(ex.: `cenas-opencode/`) e diga para "validar todas as cenas". Ele vai:
+
+- descobrir e ordenar os arquivos `cena_*.txt` na ordem das cenas,
+- rodar os checks da §13 em toda cena **mais a cadeia entre cenas** (quadro-final de
+  N → primeiro de N+1, IDs de falantes, estados de objeto, ambiente, figurino),
+- devolver uma **tabela-relatório de lote** (uma linha por cena) com conclusão
+  PASS / AVISOS / FALHAS.
+
+**Segurança:** quando houver correções a aplicar, o agente vai **primeiro perguntar
+onde gravá-las** — sobrescrever no lugar, ou um path de saída separado (recomendado)
+para que seus prompts originais fiquem intocados (§14.3). Se você escolher um path
+de saída separado, o agente copia **todos** os prompts para lá — corrigidos
+reescritos, aprovados copiados como estão — e renomeia cada um com o prefixo `valid_`
+(`valid_cena_03_prompt.txt`), de modo que esse diretório seja um conjunto
+**uniforme, completo e autocontido**, sem você precisar montar a partir de dois
+lugares.
+
+A pasta inteira está "pronta para renderizar" somente quando toda cena passa E a
+cadeia é contínua entre todo par adjacente.
+
+**Regra:** o validator é a segunda passada independente. Não o pule porque o
+assistant já "checou" internamente.
+
+---
+
+## 6. Renderize uma cena por vez
+
+1. **Exporte o quadro-final** da cena renderizada — ele deve bater com o
+   `<Picture 2>` declarado na cena seguinte (§6.3).
+2. Rode o validator no **próximo** prompt antes de continuar.
+3. Mantenha objetos de timeline consistentes (uma barra de progresso / relógio
+   nunca regride).
+4. Monte título/créditos como **T2VA** puro (sem referência de imagem).
+
+---
+
+## 7. Entrega / fechamento
+
+Após cada entrega o assistant lembra de rodar o validator. O fluxo ponta a ponta é:
+
+```
+assistant (gera)  →  validator (confere consistência)  →  renderizar
+```
+
+Repita por cena. Valide, renderize, exporte o chain frame e siga em frente.
+
+---
+
+## Solução de problemas
+
+| Sintoma | Causa / correção |
+|---------|------------------|
+| Personagem duplicado / teletransportado | Rosto conectado quando o personagem é só uma silhueta distante — use o bloco `IDENTITY (silhouette)` (§9). |
+| Emenda visível em todo corte | Fade uniforme em toda transição (§6.1) — adicione variedade com um mapa de transições planejado (§6.2). |
+| Sem memória durante a renderização | Duração da cena excede o `max_clip` da GPU — divida em mais cenas mais curtas (§4 / §3.3). |
+| "Salto"/loop na emenda das cenas | Quadro-final exportado ≠ `<Picture 2>` da cena seguinte — re-exporte o último frame não-preto (§6.3). |
+| Deriva de fundo/cor | Ambiente não reiterado por cena — use o mapa de conexão para persistir objetos/iluminação (§11). |
+
+---
+
+### Licença
+
+© 2026 **Ieso Nagata (iesonagata [at] gmail [dot] com)** — **CC BY 4.0**. Veja [`LICENSE`](LICENSE).

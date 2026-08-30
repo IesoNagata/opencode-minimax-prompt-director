@@ -1,0 +1,422 @@
+# Guia de Criação e Formatação — Prompts MiniMax H3 (modo opencode)
+
+> **Licença.** © 2026 **Ieso Nagata (iesonagata [at] gmail [dot] com)** — licenciado sob
+> **CC BY 4.0** (https://creativecommons.org/licenses/by/4.0/). Compartilhe e adapte
+> livremente com atribuição. Veja [`LICENSE`](LICENSE).
+
+> **Autoria e contexto.** Documento elaborado e aprimorado ao longo de horas de
+> interação com múltiplos agentes de IA — **opencode**, **Gemini**, **ChatGPT** e
+> **Kilo-bin** — sob curadoria de **Ieso Nagata (iesonagata [at] gmail [dot] com)**. Consolida o formato de prompt
+> MiniMax H3 e as regras de continuidade do fluxo opencode.
+> **Data:** 30/08/2026.
+
+Este guia consolida as instruções oficiais da MiniMax para o modelo **MiniMax-H3**
+(T2VA / I2VA / FL2VA / L2VA, incluindo os modos **full-reference**), junto com as
+adaptações de autoria do fluxo **opencode**: trabalho por **cenas encadeadas**,
+exportação de **quadro-final como referência da cena seguinte**, e estratégia de
+**transições** (fade / hard cut / quadro aleatório).
+
+Serve para **qualquer projeto/trama**, não apenas para um roteiro específico.
+
+**Fontes oficiais (MiniMax H3):**
+- `docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md` — modos T2VA / I2VA / FL2VA / L2VA
+- `docs/VIDEO_PROMPT_WRITING_GUIDE_ref_en.md` — modo full-reference (rewrite)
+
+---
+
+## 1. Visão geral dos modos de geração
+
+| Modo | O que faz | Referência de imagem | Campo principal |
+|------|-----------|----------------------|-----------------|
+| **T2VA** | Texto → vídeo (tela/estabelecimento/créditos) | nenhuma | `integrated_multimodal_description` |
+| **I2VA** | 1ª imagem + texto → vídeo que avança a partir dela | `<Picture 1>` (primeiro frame) | `integrated_multimodal_description` |
+| **FL2VA** | 1ª + última imagem → movimento entre elas | `<Picture 1>` e `<Picture 2>` | — |
+| **L2VA** | Última imagem → inferir estado anterior e convergir | `<Picture 1>` (último frame) | — |
+| **Full-reference** | Múltiplas referências (<Painel/Assunto/Vídeo/Áudio>) | várias | `detailed_description` + 6 seções |
+
+Regra prática: um projeto cinematográfico encadeado é, na prática, uma série de
+**I2VA em modo full-reference**, onde a cena `N+1` recebe como referência o
+**quadro-final exportado da cena `N`**.
+
+---
+
+## 2. Abertura da instrução (linha obrigatória)
+
+A instrução de alinhamento da imagem precisa ser a **primeira linha do prompt**,
+seguida de uma linha em branco antes dos campos principais.
+
+- **I2VA** (imagem inicial):
+  ```
+  For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+  ```
+- **FL2VA** (início + fim):
+  ```
+  How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.
+  ```
+- **L2VA** (fim), com `S.SS` = duração total em duas casas decimais:
+  ```
+  How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.
+  ```
+- **Full-reference**: não usa essa linha no topo; as âncoras entram via
+  `subject_definitions` + `retention_analysis` + `detailed_description`.
+
+---
+
+## 3. Os campos principais (compartilhados)
+
+### 3.1 `integrated_multimodal_description` (T2VA / I2VA)
+Descreve visuais, ações, shots, falantes, diálogo e áudio diegético ao longo do
+tempo. Estrutura recomendada:
+**âncora do primeiro frame → início da ação → desenvolvimento contínuo → resultado/reação**.
+
+Comece `[Shot 1]` declarando o **estilo** e a composição inicial, logo depois de
+uma frase de estilo:
+
+```
+The target video is in a cinematic, realistic live-action style with soft lighting.
+[Shot 1] ...
+[Shot 2] At 00:03.500, the shot cuts to ...
+```
+
+### 3.2 `detailed_description` (full-reference)
+O corpo principal da reescrita full-reference: descreve cena a cena na ordem de
+reprodução e **insere os rótulos de referência** onde eles se aplicam
+(`<Subject N>`, `<Picture N>`, `<Video N>`, `<Audio N>`).
+Estilo estabelecido **antes** de `[Shot 1]`:
+
+```
+The target video is in a cinematic, literary music-video style with soft lighting and a slightly desaturated color palette.
+[Shot 1] The scene opens ...
+[Shot 2] At 00:09.000, the shot cuts to ...
+```
+
+Extensão para geração: normalmente **350–500 palavras**; diálogo denso prioriza
+caber a linha falada completa em vez de a conta de palavras.
+
+### 3.3 `overall_soundscape` (1–4 frases)
+Resumo da atmosfera e dos sons físicos (vento, chuva, passos, tecido, respiração).
+**Não** repita diálogo, canto ou música. Use `N/A` apenas para silêncio completo.
+
+### 3.4 `non_diegetic_music` (1–3 frases)
+Música que só a plateia ouve. Foque em instrumentação, andamento, ritmo e
+dinâmicas — **evite** adjetivos abstratos de emoção. Use `N/A` se não houver.
+
+---
+
+## 4. Shots e cortes (`[Shot N]`)
+
+- **`[Shot 1]`** não leva timestamp.
+- Shots seguintes usam `[Shot N] At MM:SS.mmm, ...` com **tempos estritamente
+  crescentes** e **dentro da duração** do vídeo:
+  ```
+  [Shot 2] At 00:03.500, the camera cuts to ...
+  ```
+- Verbos de cortes comuns: `the camera cuts to`, `the shot cuts to`,
+  `the shot transitions to`, `the shot changes to`, `the shot switches to`.
+- Fade, cross-dissolve ou wipe podem ser usados **quando solicitados
+  explicitamente** (ver §6 Transições).
+- Um corte deve introduzir informação nova (sujeito, espaço, estado, ponto de
+  vista ou tempo). Se só a distância/ângulo muda, **prefira movimento de câmera**.
+
+---
+
+## 5. Câmera: `[Motion Type] + Amplitude + Speed`
+
+Escreva o movimento como uma ação em inglês natural, com amplitude e velocidade
+apenas quando fizerem sentido (amplitude média e velocidade normal podem ser
+omitidas).
+
+| Dimensão | Expressões |
+|----------|-------------|
+| Tipo | `Zoom In/Out`, `Push In/Pull Out`, `Pan Left/Right`, `Truck Left/Right`, `Tilt Up/Down`, `Pedestal Up/Down`, `Arc Shot`, `Tracking Shot`, `Static Shot`, `Shake Slightly/Strongly`, `POV`, `Roll Clockwise/Counterclockwise` |
+| Amplitude | `with small amplitude`, `with large amplitude` |
+| Velocidade | `at slow speed`, `at fast speed` |
+
+Exemplos:
+```
+The camera pushes in with small amplitude at slow speed toward the folded letter in her hands.
+The camera pans right with large amplitude at fast speed, revealing the open doorway.
+```
+
+---
+
+## 6. Transições entre cenas — ESTRATÉGIA GERAL
+
+Este é um dos pontos mais importantes do fluxo encadeado. O **último quadro de uma
+cena é exportado e vira a referência da cena seguinte** (o chain frame). A escolha
+do **tipo de transição** define se as emendas ficam visíveis ou não.
+
+### 6.1 Opção A — Fade (usada nesta versão)
+- Cada cena **termina em fade-out para preto** e a seguinte **inicia com fade-in**.
+- O personagem já está reposicionado no novo local após o fade.
+- Vantagem: sinaliza passagem de tempo/espaço, elimina o teletransporte, cobre
+  mudanças de ambiente sem atravessar paredes.
+- **Desvantagem (observação registrada):** o fade repetido em todas as transições
+  torna as emendas **facilmente perceptíveis** no filme total — o espectador vê
+  exatamente onde cada cena foi emendada.
+
+### 6.2 Opção B — Quadro aleatório / variedade de transições (recomendada p/ sintonia fina)
+Alternar os tipos de transição ao longo do filme para **não revelar o padrão** das
+emendas. Exemplos de tipos de virada:
+- **Quadro congelado → hard cut** para um quadro que já contém o início da próxima
+  ação (boa para ritmo e continuidade de movimento).
+- **Fade** apenas nos pontos de **mudança de ambiente** (interior→exterior,
+  andar→andar), não em toda cena.
+- **Match cut / corte em movimento** (continuar um movimento que atravessa o corte).
+- **Corte seco** quando a cena seguinte começa em continuidade espacial/temporal.
+
+Regra: a **aleatoriedade é planejada** — escolha o tipo de virada por cena em um
+**mapa de transições** definido antes da renderização, e anote o quadro-final
+exportado de cada uma.
+
+### 6.3 Regra inflexível do chain frame
+Seja qual for a transição, o **quadro final vivido da cena `N`** deve ser o
+`<Picture 2>` / chain frame da cena `N+1`. Não encerrar a cena com um quadro que
+não corresponde à referência do próximo (isso causa "salto"/loop). Ao usar fade,
+o quadro exportado deve ser o **último frame não-preto** (antes do fade final),
+nunca o preto puro.
+
+---
+
+## 7. Modo full-reference — as 6 seções
+
+O modo full-reference organiza a saída nas seguintes seções, **nesta ordem**:
+
+```
+subject_definitions:
+summary:
+retention_analysis:
+detailed_description:
+overall_soundscape:
+non_diegetic_music:
+```
+
+### 7.1 `subject_definitions`
+Define cada conteúdo referenciado e seu rótulo. Tipos de rótulos:
+
+| Rótulo | Significado |
+|--------|-------------|
+| `<Subject N>` | Conteúdo visível reutilizável (pessoa, objeto, ambiente, estilo, pose) |
+| `<Picture N>` | Imagem usada como frame concreto / âncora de enquadramento |
+| `<Video N>` | Vídeo-fonte (edições, continuações, estrutura temporal) |
+| `<Audio N>` | Áudio que é copiado ou referenciado |
+
+Cada item em sua própria linha, explicando o que o rótulo denota, seu papel e as
+características a seguir.
+
+### 7.2 `summary`
+Um parágrafo curto com prefixo entre colchetes do **tipo de tarefa**:
+`[keyframe completion]`, `[reference generation]`, `[video editing]`,
+`[video continuation]`, `[audio reuse]`, `[audio reference]` — combináveis com `+`.
+
+### 7.3 `retention_analysis`
+Uma linha por rótulo, com marcadores fixos em inglês:
+- Visível: `fully_preserved`, `partially_preserved`, `attribute_transfer`,
+  `weak_reference`.
+- Áudio: `fully_copy`, `partially_copy`, `reference`, `weak_reference`.
+
+### 7.4 `detailed_description`
+Ver §3.2. Insira os rótulos de referência na primeira aparição importante e
+reutilize-os depois. História de referência natural:
+```
+[Shot 1] ... the shot begins from <Picture 1> ...
+[Shot 2] At 00:09.000, the shot ends on <Picture 2> ...
+```
+
+### 7.5 `overall_soundscape` e `non_diegetic_music`
+Ver §3.3 e §3.4. Áudio de referência: relate **cópia** em `overall_soundscape`
+(ambiente/efeitos) e em `non_diegetic_music` (trilha só-da-plateia).
+
+---
+
+## 8. Falantes, diálogo e IDs `(Sx)`
+
+- Atribua IDs estáveis `(S1)`, `(S2)`, ... aos falantes; mantenha o mesmo ID entre
+  cenas e shots. Fala em grupo usa composto: `(S1,S2)`.
+- A frase de identificação, o ID, a ação e a entrega vão **fora** do `<d>`. Dentro
+  de `<d>` vão apenas o idioma e o conteúdo falado, **verbatim** (não traduzir).
+  ```
+  The young woman with a quiet, breathy voice (S1) says: <d>[English] I get off at the next station.</d>
+  ```
+- **Voiceover:** use a frase exata `says in an off-screen voiceover` e, logo após
+  o bloco `<d>`, declare que os lábios do personagem em cena permanecem fechados:
+  ```
+  The man (S1) says in an off-screen voiceover: <d>[English] ... </d> while his lips remain completely closed.
+  ```
+- Diálogo que atravessa um corte: use `<scenetrans>` e diga que o áudio continua.
+  Fala truncada pelo fim do vídeo: use `<cutoff>`.
+
+### 8.1 Mapa global de falantes (recomendação)
+Em projetos com narrador + personagem, defina IDs **globais** e consistentes:
+- `(S1)` = narrador off-screen (lábios fechados, voiceover).
+- `(S2)` = personagem principal em cena (fala com movimento labial normal).
+- `(S3+...)` = personagens secundários, na ordem dos eventos vocais.
+- Personagens que **nunca** falam não recebem ID.
+
+---
+
+## 9. Rosto e silhueta — quando conectar a face
+
+O anchor de face (`<Picture 1>` = retrato) deve ser conectado **somente** quando o
+rosto está **reconhecível em quadro**. Conectar a face numa cena em que o
+personagem é só uma silhueta distante faz o modelo **injetar um close de rosto**
+indesejado (efeito de personagem duplicado/teletransportado).
+
+Quando uma **silhueta distante** do personagem aparece (ex.: atrás de vidro com
+chuva, longe, desfocada):
+- **Não** conecte a face como imagem.
+- Declare no `subject_definitions` um bloco `IDENTITY (silhouette)`:
+  a forma é o mesmo personagem (porte, ombros, postura, cabelo curto), visto só
+  como silhueta, **sem renderizar o rosto** nem trazer uma figura identificável
+  para o enquadramento.
+
+Isso preserva a **identidade** (o espectador reconhece quem é) sem o bug do close.
+
+---
+
+## 10. Texto em cena e créditos (T2VA)
+
+- Qualquer **texto visível em cena** (placa, banner, rótulo, letreiro, legenda)
+  vai em **aspas duplas em inglês**, preservando o texto original/pontuação:
+  ```
+  A red neon sign reading "营业中" glows above the doorway.
+  ```
+- Cenas de **créditos / cartão de título** são T2VA:
+  usam `integrated_multimodal_description` + `overall_soundscape` + `non_diegetic_music`.
+
+---
+
+## 11. Continuidade física — regras de autor (aplicável a qualquer trama)
+
+Se você optar pela linguagem cinematográfica de continuidade física (como nesta
+versão), estas regras evitam os defeitos mais comuns:
+
+1. **Sem transposição de paredes/portas:** mudança de ambiente é coberta por fade
+   ou corte planejado; nada "atravessa" um objeto.
+2. **Sem teletransporte:** a nova cena abre com o personagem já na posição inicial
+   do ambiente; deslocamentos dentro da cena são contínuos e observáveis.
+3. **Um verbo de locomoção por cena**, sem retornos a espaços já deixados.
+4. **Trajetória one-way:** a ordem dos ambientes não volta atrás.
+5. **Persistência de objetos:** cada objeto mantém posição e estado; mudanças são
+   declaradas (ex.: um relógio/barra de progressão nunca regride).
+6. **Iluminação consistente:** cada ambiente mantém sua assinatura de luz.
+7. **Rótulos de continuidade** entre cenas (mapa de conexão) para não duplicar
+   personagem nem perder objetos de timeline.
+
+---
+
+## 12. Dicas de fluxo de trabalho do projeto (opencode)
+
+1. **Divida a trama em cenas** (ex.: 12–17 cenas, ~12s cada, 16:9, 0.7 MP a 24fps
+   como ponto de partida).
+2. **Escreva um mapa de conexão por cena:** qual face conecta, qual é o chain
+   frame da cena anterior (quadro-final exportado), quais objetos persistem.
+3. **Defina um mapa de transições** antes de renderizar (§6) — isso controla se as
+   emendas ficam visíveis.
+4. **Exporte o quadro-final** de cada cena renderizada; confira se ele bate com o
+   `<Picture 2>` declarado na cena seguinte.
+5. **Rende uma cena por vez**, validando continuidade antes de passar à frente.
+6. **Título e créditos** em T2VA puro (sem referência de imagem).
+
+---
+
+## 13. Checklist de qualidade (aplicar a cada cena)
+
+- [ ] Instrução de alinhamento/abertura correta para o modo usado (§2).
+- [ ] Estilo declarado antes de `[Shot 1]` (full-reference e I2VA).
+- [ ] `[Shot N] At MM:SS.mmm` com tempos crescentes e dentro da duração.
+- [ ] Movimentos de câmera com `Amplitude + Speed` quando expressivos (§5).
+- [ ] IDs `(Sx)` globais consistentes; `<d>[idioma] conteúdo verbatim</d>` (§8).
+- [ ] Voiceover com "lips remain closed"; fala on-screen com movimento labial.
+- [ ] Full-reference: 6 seções na ordem certa (§7).
+- [ ] Rótulos de referência (`<Picture N>`, `<Subject N>`) reutilizados, não re-definidos.
+- [ ] Face conectada **só** com rosto reconhecível; silhueta distante via `IDENTITY` (§9).
+- [ ] Quadro-final exportado = `<Picture 2>` da próxima cena (§6.3).
+- [ ] Mapa de transições definido e respeitado (§6).
+- [ ] Continuidade física: one-way, sem teletransporte, persistência de objetos (§11).
+- [ ] Texto em cena entre aspas duplas, verbatim (§10).
+
+---
+
+## 14. Modo VALIDAÇÃO EM LOTE / POR PATH (driver por agente, diretório inteiro)
+
+Quando o operador aponta o validator para um **diretório de arquivos de prompt** (ex.:
+`cenas-opencode/cena_*.txt`) e ordena uma validação, o agente executa uma **passada em
+lote** sobre a pasta inteira, em vez de um prompt por vez. Procedimento:
+
+### 14.1 Descobrir os arquivos
+
+1. Liste o diretório indicado pelo operador.
+2. Identifique os arquivos de prompt de cena por um padrão reconhecível
+   (`cena_*.txt`, `scene_*.txt`, ou qualquer um que o operador indicar). Ignore
+   arquivos que não são prompt (README, notas, imagens).
+3. Ordene-os na **ordem das cenas** pelo número no nome do arquivo (CENA 1, 2, …),
+   nunca alfabeticamente quando isso reordenasse (CENA 10 antes de CENA 2).
+
+### 14.2 Rodar os checks por cena
+
+Para cada arquivo, em ordem, aplique o checklist da §13. Dentro de um mesmo lote:
+
+- **Continuidade entre cenas:** confira a cadeia — o quadro-final exportado da cena N
+  (declarado `<Picture 2>`) bate com o `<Picture 1>`/abertura da cena N+1; IDs de
+  falantes, estados de objeto (barra de progresso / relógio), ambiente e figurino
+  persistem.
+- **Checks mecânicos:** timestamps estritamente crescentes e dentro da duração
+  declarada; todo `[Shot N]` presente e rotulado; blocos `<d>[Lang]` fechados e
+  verbatim; rótulos de referência não redefinidos; seções na ordem; texto em cena
+  entre aspas duplas.
+- **Estrutural:** cabeçalho com `Technical settings` e `SCENE CONNECTIONS` presente,
+  com uma duração que bate com a timeline dos `[Shot N]` daquele arquivo.
+
+### 14.3 Perguntar onde gravar as correções e produzir o relatório em lote
+
+**Segurança — pergunte antes de escrever qualquer coisa.** Quando o lote encontrar
+correções a aplicar, primeiro pergunte ao operador para onde os prompts corrigidos
+devem ir:
+
+- **Sobrescrever no lugar** — editar cada `cena_*.txt` onde ele está.
+- **Path de saída separado (padrão / recomendado)** — gravar cópias em um novo
+  diretório (ex.: `cenas-corrigidas/` ou `validated/`) e deixar os originais
+  intocados.
+
+Nunca sobrescreva os arquivos de prompt originais sem um "sim" explícito do
+operador; o path de saída separado é o padrão seguro, para que uma correção ruim
+nunca destrua a fonte de verdade.
+
+**Quando o operador escolher um path de saída separado, o agente copia TODOS os
+prompts para lá — corrigidos ou não.** O diretório de saída deve ser um conjunto
+**completo e autocontido** de toda a rodada de cenas, nunca uma mistura de
+"corrigidos aqui e intocados lá no path original". Ou seja: arquivos corrigidos vão
+para o path de saída **reescritos**, e os que já passaram vão para lá **copiados
+como estão**. O operador nunca deve precisar procurar em dois diretórios para
+montar o conjunto final.
+
+**Nomeação — prefixe todo arquivo do path de saída com `valid_`.** Todo prompt
+gravado ou copiado para o diretório de saída é renomeado com o prefixo `valid_`
+(`cena_03_prompt.txt` → `valid_cena_03_prompt.txt`) — **todos, corrigidos ou não**,
+para que o diretório leia de forma uniforme e nada sugira que um arquivo foi
+pulado. A ordem das cenas é preservada (o número `cena_N` permanece no nome). A
+diferença por arquivo (corrigido vs. copiado como está) é reportada na tabela-resumo,
+não no nome do arquivo.
+
+Entregue uma **tabela-resumo** do diretório inteiro, uma linha por cena:
+
+| CENA | Arquivo | Duração | Shots | Cadeia OK (ant→próx) | Rosto/`IDENTITY` | IDs de falante | Resultado |
+|------|---------|---------|-------|----------------------|------------------|-----------------|-----------|
+| CENA 1 | cena_00_prompt.txt | 12 s | 1 | — (início) | rosto | S1,S2 | ✅ / ⚠️ / ❌ |
+| CENA 2 | cena_01_prompt.txt | 12 s | 2 | ✅ | silhueta | S1,S2 | ✅ / ⚠️ / ❌ |
+
+Conclua com:
+- **PASS** — toda cena passa no checklist da §13 e a cadeia entre cenas está limpa.
+- **AVISOS (⚠️)** — desvios aceitáveis, mas que valem nota (ex.: fade-as-cut decidido,
+  uma exceção documentada).
+- **FALHAS (❌)** — itens que quebram a continuidade ou o formato oficial e devem ser
+  corrigidos antes de renderizar, cada um com o arquivo, a regra (§) e uma linha de
+  correção.
+
+### 14.4 Critério de saída do lote
+
+Trate a pasta inteira como **pronta para renderizar** somente quando cada cena
+individual passa E a cadeia entre cenas (último frame de N → primeiro de N+1) é
+contínua para todo par adjacente. Qualquer `❌` bloqueia o lote até ser corrigido e
+revalidado.

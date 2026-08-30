@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiniMax H3 opencode Prompt Director — Apresentação</title>
+<style>
+  :root {
+    --bg: #0d0f1a;
+    --panel: #161a30;
+    --panel2: #1c2140;
+    --accent: #7c6cff;
+    --accent2: #00d4b0;
+    --text: #e8eaf6;
+    --muted: #9aa0c0;
+    --gold: #ffd166;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(1200px 700px at 20% -10%, #232a55 0%, var(--bg) 55%);
+    color: var(--text);
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .deck { width: 100%; height: 100vh; position: relative; }
+  .slide {
+    position: absolute; inset: 0;
+    display: none; flex-direction: column;
+    justify-content: center;
+    padding: 5vh 8vw;
+  }
+  .slide.active { display: flex; animation: fade .5s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity: 1; transform: none;} }
+  .kicker {
+    text-transform: uppercase; letter-spacing: 4px; font-size: .8rem;
+    color: var(--accent2); margin-bottom: 14px; font-weight: 600;
+  }
+  h1 { font-size: clamp(2rem, 5.5vw, 4.2rem); line-height: 1.05; margin-bottom: 20px; }
+  h1 .accent { color: var(--accent); }
+  h2 { font-size: clamp(1.5rem, 3.5vw, 2.6rem); margin-bottom: 18px; }
+  h3 { font-size: 1.15rem; color: var(--gold); margin: 14px 0 6px; }
+  p.lead { font-size: clamp(1rem, 2vw, 1.35rem); color: var(--muted); max-width: 60ch; }
+  ul { list-style: none; max-width: 70ch; }
+  li { padding: 8px 0 8px 28px; position: relative; font-size: 1.05rem; line-height: 1.5; }
+  li::before { content: "▸"; position: absolute; left: 0; color: var(--accent2); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 1000px; }
+  .card {
+    background: linear-gradient(160deg, var(--panel), var(--panel2));
+    border: 1px solid rgba(124,108,255,.25);
+    border-radius: 14px; padding: 18px 20px;
+  }
+  .card h3 { margin-top: 0; color: var(--accent); }
+  .card p { color: var(--muted); font-size: .95rem; line-height: 1.5; }
+  .flow {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-weight: 600; margin-top: 10px;
+  }
+  .step {
+    background: var(--panel2); border: 1px solid var(--accent);
+    border-radius: 30px; padding: 10px 18px;
+  }
+  .arrow { color: var(--accent2); }
+  code, .mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: #00000066; border: 1px solid #ffffff22;
+    padding: 1px 6px; border-radius: 6px; font-size: .9em; color: var(--gold);
+  }
+  .badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .badge {
+    padding: 8px 14px; border-radius: 24px; font-size: .85rem; font-weight: 600;
+    background: #ffffff10; border: 1px solid #ffffff22;
+  }
+  .nav {
+    position: fixed; bottom: 22px; left: 0; right: 0;
+    display: flex; justify-content: center; align-items: center; gap: 18px; z-index: 10;
+  }
+  .nav button {
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    padding: 10px 22px; border-radius: 30px; font-weight: 700; font-size: 1rem;
+    transition: transform .1s ease, background .2s ease;
+  }
+  .nav button:hover { background: #8f81ff; transform: scale(1.04); }
+  .counter { color: var(--muted); font-size: .9rem; min-width: 70px; text-align: center; }
+  .dots { display: flex; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #ffffff22; }
+  .dot.on { background: var(--accent2); }
+  .tag { display: inline-block; font-size: .75rem; background: #00000055; border: 1px solid var(--accent); color: var(--accent); border-radius: 6px; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+  .mode-table { border-collapse: collapse; width: min(900px, 100%); }
+  .mode-table th, .mode-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid #ffffff18; }
+  .mode-table th { color: var(--accent2); text-transform: uppercase; font-size: .8rem; letter-spacing: 1px; }
+  .mode-table td { font-size: .95rem; }
+  .mode-table tr td:first-child { color: var(--gold); font-family: ui-monospace, monospace; font-weight: 600; }
+  .footer-note { position: fixed; top: 16px; right: 20px; font-size: .75rem; color: var(--muted); z-index: 10; }
+  .lang-link { position: fixed; top: 16px; left: 20px; font-size: .8rem; color: var(--accent2); text-decoration: none; background:#ffffff10; padding: 4px 10px; border-radius: 14px; z-index: 10; }
+  a.lang-link:hover { background: #ffffff22; }
+</style>
+</head>
+<body>
+<div class="footer-note">MiniMax H3 · opencode Prompt Director</div>
+<a class="lang-link" href="presentation.html">English →</a>
+
+<div class="deck">
+  <!-- 1: Capa -->
+  <section class="slide active">
+    <div class="kicker">Kit do produtor · Vídeo IA</div>
+    <h1>MiniMax H3<br><span class="accent">opencode Prompt Director</span></h1>
+    <p class="lead">Um kit validado em produção que monta prompts MiniMax H3
+    tecnicamente corretos para cenas cinematográficas encadeadas — com continuidade
+    física, lotes cientes de VRAM e um validator como segunda passada.</p>
+    <div class="badges">
+      <span class="badge">T2VA · I2VA · FL2VA · L2VA</span>
+      <span class="badge">Full-reference</span>
+      <span class="badge">CC BY 4.0</span>
+      <span class="badge">Validado em produção</span>
+    </div>
+    <p class="lead" style="margin-top:24px;font-size:1rem;">© 2026 Ieso Nagata (iesonagata [at] gmail [dot] com)</p>
+  </section>
+
+  <!-- 2: O problema -->
+  <section class="slide">
+    <div class="kicker">Por que isto existe</div>
+    <h2>O problema</h2>
+    <ul>
+      <li>MiniMax H3 gera um clipe por geração — um filme de 60&nbsp;s são <b>muitos clipes</b>.</li>
+      <li>Clipe emendados de forma ingênua mostram <b>emendas visíveis</b>, teletransportes e deriva.</li>
+      <li>Cada clipe deve caber na <b>VRAM</b> da GPU — o tamanho do lote é uma restrição real.</li>
+      <li>Os prompts devem seguir o <b>formato oficial</b> do H3 ou o modelo se comporta mal.</li>
+    </ul>
+    <div class="card" style="margin-top:24px;">
+      <h3>A resposta</h3>
+      <div class="flow">
+        <span class="step">assistant gera</span>
+        <span class="arrow">→</span>
+        <span class="step">validator confere</span>
+        <span class="arrow">→</span>
+        <span class="step">renderiza 1 cena</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3: O fluxo -->
+  <section class="slide">
+    <div class="kicker">Cenas encadeadas</div>
+    <h2>O fluxo de cenas encadeadas</h2>
+    <ul>
+      <li>Divida a trama em cenas (12–17, ~12&nbsp;s cada) — cada uma é uma renderização.</li>
+      <li><b>Exporte o quadro-final</b> de cada cena → ele vira o <b>chain frame</b>
+      (<code>&lt;Picture 2&gt;</code>) de referência da cena seguinte.</li>
+      <li>Monte o prompt com o <b>assistant</b>, confira com o <b>validator</b>,
+      renderize uma cena por vez.</li>
+      <li>Continuidade física: trajetória one-way, sem teletransporte, objetos persistem.</li>
+    </ul>
+    <div class="card" style="margin-top:20px;max-width:60ch;">
+      <code>&lt;Picture 2&gt; (cena N)</code> = quadro-final exportado da <code>cena N</code><br>
+      <code>&lt;Picture 1&gt; (cena N+1)</code> = esse mesmo quadro em 0,00 s
+    </div>
+  </section>
+
+  <!-- 4: O kit -->
+  <section class="slide">
+    <div class="kicker">O que contém</div>
+    <h2>O kit</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>opencode_minimax_assistant.md</h3>
+        <p><b>Director de Prompts v6</b> interativo. Entrevista você no seu idioma,
+        oferece exemplos possíveis, aceita um arquivo de trama completa, embute
+        parâmetros (<code>[PARAM]</code>) e lições (<code>[LESSON]</code>) de produção,
+        e pergunta a capacidade de lote da sua GPU para dividir o total em cenas que
+        cabem na VRAM.</p>
+      </div>
+      <div class="card">
+        <h3>opencode_minimax_prompt_validator.md</h3>
+        <p><b>Guia genérico de validação</b> + checklist de qualidade por cena. Cobre
+        modos, linha de abertura, shots, câmera, transições, seções full-reference,
+        falantes, silhueta vs. rosto e continuidade física.</p>
+      </div>
+      <div class="card">
+        <h3>INSTRUCTIONS.md</h3>
+        <p>Uso passo a passo: carregar o assistant, fornecer a trama, definir
+        duração &amp; lote, gerar, validar, renderizar uma cena por vez.</p>
+      </div>
+      <div class="card">
+        <h3>README / LICENSE</h3>
+        <p>A página inicial do projeto e a licença de atribuição <b>CC BY 4.0</b>.
+        Compartilhe e adapte livremente, com crédito.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5: Modos -->
+  <section class="slide">
+    <div class="kicker">Um formato, cinco modos</div>
+    <h2>Modos do MiniMax H3</h2>
+    <table class="mode-table">
+      <tr><th>Modo</th><th>O que faz</th><th>Referência de imagem</th></tr>
+      <tr><td>T2VA</td><td>Texto → vídeo (establishing / créditos)</td><td>nenhuma</td></tr>
+      <tr><td>I2VA</td><td>1ª imagem + texto → vídeo a partir dela</td><td>&lt;Picture 1&gt;</td></tr>
+      <tr><td>FL2VA</td><td>1ª + última imagem → movimento entre elas</td><td>&lt;Picture 1&gt; &amp; 2</td></tr>
+      <tr><td>L2VA</td><td>Última imagem → inferir estado anterior, convergir</td><td>&lt;Picture 1&gt;</td></tr>
+      <tr><td>Full-ref</td><td>Muitas referências, 6 seções</td><td>várias</td></tr>
+    </table>
+    <p class="lead" style="margin-top:20px;">Um filme encadeado é uma série de <b>I2VA
+    em modo full-reference</b>: a cena N+1 recebe o quadro-final da cena N.</p>
+  </section>
+
+  <!-- 6: Lotes por VRAM -->
+  <section class="slide">
+    <div class="kicker">Planejamento ciente de hardware</div>
+    <h2>Divisão em lotes por VRAM</h2>
+    <ul>
+      <li>Defina um total fixo (ex.: <b>60&nbsp;s</b>).</li>
+      <li>O assistant pergunta: <i>"Qual é a duração máxima que sua GPU renderiza em
+      uma geração antes de acabar a VRAM?"</i> — isto vira o <code>max_clip</code>.</li>
+      <li>O total se divide para que toda cena ≤ <code>max_clip</code> = um lote que
+      caiba na VRAM.</li>
+    </ul>
+    <div class="card" style="margin-top:20px;max-width:70ch;">
+      <b>60 s ÷ 12 s / lote → 5 × 12 s</b><br>
+      Uma GPU que aguenta só 8 s → os mesmos 60 s viram ~7–8 cenas, cada uma ≤ 8 s.
+    </div>
+  </section>
+
+  <!-- 7: Continuidade -->
+  <section class="slide">
+    <div class="kicker">Disciplina de autoria</div>
+    <h2>Regras de continuidade física</h2>
+    <ul>
+      <li>Sem atravessar paredes/portas; mudança de ambiente coberta por fade ou corte planejado.</li>
+      <li>Sem teletransporte: a nova cena abre com o personagem já no lugar; movimento é observável.</li>
+      <li>Trajetória one-way; objetos mantêm posição/estado (um relógio nunca regride).</li>
+      <li>Âncora de rosto só quando o rosto está <b>reconhecível</b>; uma silhueta distante usa
+      o bloco <code>IDENTITY (silhouette)</code>.</li>
+      <li>Voice-over mantém "lips remain closed"; falas em cena usam movimento labial normal.</li>
+    </ul>
+  </section>
+
+  <!-- 8: Procedência -->
+  <section class="slide">
+    <div class="kicker">Procedência</div>
+    <h2>De onde vem</h2>
+    <p class="lead">Validado em produção no curta <b>"O Fio de Ariadne"</b>
+    (17 cenas encadeadas renderizadas ponta a ponta). Refinado ao longo de horas de
+    interação entre agentes de IA — <b>opencode</b>, <b>Gemini</b>, <b>ChatGPT</b> e
+    <b>Kilo-bin</b> — sob curadoria de <b>Ieso Nagata</b>.</p>
+    <div class="card" style="margin-top:26px;">
+      <h3>Licença</h3>
+      <p><b>CC BY 4.0</b> — compartilhe e adapte livremente, com atribuição.
+      © 2026 Ieso Nagata (iesonagata [at] gmail [dot] com).</p>
+    </div>
+    <p class="lead" style="margin-top:22px;">assistant → validator → renderizar.</p>
+  </section>
+</div>
+
+<div class="nav">
+  <button id="prev">←</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter"></span>
+  <button id="next">→</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  let idx = 0;
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.addEventListener('click', () => go(i));
+    dots.appendChild(d);
+  });
+  function go(i) {
+    idx = (i + slides.length) % slides.length;
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+    Array.from(document.querySelectorAll('.dot')).forEach((d, j) => d.classList.toggle('on', j === idx));
+    counter.textContent = (idx + 1) + ' / ' + slides.length;
+  }
+  document.getElementById('prev').addEventListener('click', () => go(idx - 1));
+  document.getElementById('next').addEventListener('click', () => go(idx + 1));
+  window.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') go(idx + 1);
+    if (e.key === 'ArrowLeft') go(idx - 1);
+  });
+  go(0);
+</script>
+</body>
+</html>

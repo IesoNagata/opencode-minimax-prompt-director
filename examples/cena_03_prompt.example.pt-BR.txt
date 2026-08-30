@@ -1,0 +1,28 @@
+=== CENA 3 / 12 — INTERIOR, O INVESTIGADOR NO TRABALHO ===
+Technical settings: duration 12 seconds · aspect ratio 16:9 · resolution 0.7 MP (1152×640) · 24fps
+CONEXÕES DA CENA: <Picture 1> = rosto (personagem.png) [CONECTADO] · <Picture 2> = chain frame CENA 2 [CONECTADO]
+— LINHA ABAIXO = PROMPT ENVIADO AO MODELO —
+
+Este é um exemplo de cena I2VA encadeada bem formada, em estilo full-reference.
+Mostra o formato, o cabeçalho e a disciplina de continuidade — adapte o conteúdo
+à sua própria trama.
+
+subject_definitions:
+<Picture 1> é o retrato do rosto do investigador (cerca de 40 anos, cabelo curto, ombros largos) apenas nas cenas em que o rosto dele está em quadro e reconhecível. <Picture 2> é o quadro-final extraído da CENA 2 (o interior do apartamento), usado como o primeiro frame exato aos 0,00 s.
+
+summary:
+[reference generation + keyframe completion] O vídeo-alvo começa exatamente em <Picture 2> e continua a partir do apartamento estabelecido. O investigador levanta da mesa mostrada em <Picture 2>.
+
+retention_analysis:
+<Picture 1>: attribute_transfer (identidade do rosto, sem correspondência exata de luz)
+<Picture 2>: fully_preserved (estado do primeiro frame)
+
+detailed_description:
+Live-action cinematográfico realista; o investigador se levanta da mesa mostrada em <Picture 2>.
+[Shot 1] A câmera mantém um plano estático enquanto o homem de <Picture 1> termina de digitar, a luz verde dos terminais lavando seu rosto. Ele (S2) diz com voz medida: <d>[Português] Os logs de acesso não mentem.</d>
+[Shot 2] Aos 00:06.000, a câmera faz um pan à direita com pequena amplitude em velocidade lenta enquanto ele se levanta, mantém a barra de progresso em 65% (inalterada desde a cena anterior) e caminha em direção à porta. O ambiente mantém os mesmos cabos, monitores e paleta verde estabelecidos antes. Ele caminha em linha reta da mesa até a porta, sem nunca reentrar, sem olhar para trás.
+[Shot 3] Aos 00:10.500, a câmera mantém um plano estático enquanto o quadro faz fade-out para preto puro, pronto para passar para a cena do corredor.
+
+overall_soundscape: Zumbido fraco de cooler e monitor; os passos cruzam a sala. Nada mais.
+
+non_diegetic_music: Drone ambiente escuro e esparso, sustentado, baixo, mantendo uma inquietação discreta sem movimento melódico.
