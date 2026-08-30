@@ -78,6 +78,10 @@ Authoring and rules were validated in production on the short film
 among multiple AI agents — **opencode**, **Gemini**, **ChatGPT** and **Kilo-bin** —
 curated by **Ieso Nagata (iesonagata [at] gmail [dot] com)**.
 
+**Watch the film** (generated end-to-end with this toolkit):
+
+[![O Fio de Ariadne — a MiniMax H3 short film](https://img.youtube.com/vi/XgA_2ZJTqR4/0.jpg)](https://www.youtube.com/watch?v=XgA_2ZJTqR4)
+
 ## Official MiniMax H3 sources referenced
 
 - `docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md` — T2VA / I2VA / FL2VA / L2VA
