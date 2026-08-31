@@ -303,6 +303,47 @@ versão), estas regras evitam os defeitos mais comuns:
 7. **Rótulos de continuidade** entre cenas (mapa de conexão) para não duplicar
    personagem nem perder objetos de timeline.
 
+### 11.8 O CONTINUISTA (continuity supervisor) — checagem sobre o texto dos prompts
+
+Função que desempenha, no fluxo de prompts encadeados, o papel de um **continuista /
+script supervisor** numa obra real: antes de qualquer render, ele confere — **somente
+pelo texto dos arquivos** (os frames ainda não existem) — se a CENA `N+1` continua
+comportamental e fisicamente a CENA `N`. Três eixos obrigatórios:
+
+**(a) Direção de movimento / screen direction — "continua andando para o mesmo lado":**
+- Se a CENA `N` termina com o personagem (ou a câmera) se movendo **para a direita**,
+  a CENA `N+1` deve abrir movendo **para o mesmo lado**, ou reajustar explicitamente
+  (fade/corte para um novo enquadramento). Inverter sem aviso faz o personagem
+  "virar-se" sem motivo.
+- Ancore a direção a um marco visível declarado uma vez por beat (§5/§11) e, no
+  Shot 1 da CENA `N+1`, declare a continuidade (ex.: "continuing his step to the
+  right that ended the previous scene").
+- Um verbo de locomoção por cena; nunca retornar a espaço já deixado (§11).
+- Em fade de mudança de ambiente/title card, o corte em si é o reset — a direção pode
+  divergir apenas porque a cena foi recomposta, nunca no meio de um deslocamento.
+
+**(b) Estados de objeto / timeline — "nunca regride" (reforça §11 item 5):**
+- Qualquer **indicador de progresso** (barra, relógio, contador, gauge, percentual) no
+  **fim da CENA `N`** deve ser **igual** ao **início da CENA `N+1`**; depois pode avançar.
+  Confira cada menção numérica nos dois textos.
+- Liste cada objeto persistente com seu estado no **início e fim** de cada cena
+  (mapa de conexão) e confirme que nenhum valor voltou atrás nem "saltou" no tempo.
+- Contradição entre o texto do shot e o `<Picture N>` (chain frame) já causou
+  "tempo andando para trás" — a prosa e a referência nunca podem divergir.
+
+**(c) Vestimenta / corpo / assets — "mesmas roupas, mesmo físico, mesmas refs":**
+- A vestimenta e a descrição corporal do personagem devem ser **textualmente idênticas**
+  em todas as cenas em que ele aparece; qualquer deriva (cor de jaqueta, barba, prop
+  sumido) lê-se como outro personagem.
+- `<Picture 1>` (rosto) conectado **somente** quando o rosto está reconhecível em
+  quadro, e fornece **apenas rosto — nunca aparece em quadro** (§9).
+- `<Picture 2>` (chain frame da CENA `N`) deve estar conectado na CENA `N+1` e bater
+  com o **último quadro não-preto** real da cena anterior (§6).
+
+**Saída da passada** — por par adjacente, uma linha:
+`N→N+1 | screen direction ✓/✗ | objetos forward-only ✓/✗ | vestimenta/corpo idênticos ✓/✗ | chain frame referenciado ✓/✗`.
+Qualquer ✗ **bloqueia o lote** até ser corrigido (§14.4).
+
 ---
 
 ## 12. Dicas de fluxo de trabalho do projeto (opencode)
@@ -334,6 +375,7 @@ versão), estas regras evitam os defeitos mais comuns:
 - [ ] Quadro-final exportado = `<Picture 2>` da próxima cena (§6.3).
 - [ ] Mapa de transições definido e respeitado (§6).
 - [ ] Continuidade física: one-way, sem teletransporte, persistência de objetos (§11).
+- [ ] **Continuista (§11.8):** direção de movimento igual ou reajustada entre pares adjacentes; objetos/timeline forward-only; vestimenta/corpo idênticos; `<Picture 2>` referenciado e batendo com o último quadro não-preto da cena anterior.
 - [ ] Texto em cena entre aspas duplas, verbatim (§10).
 
 ---
@@ -361,6 +403,11 @@ Para cada arquivo, em ordem, aplique o checklist da §13. Dentro de um mesmo lot
   (declarado `<Picture 2>`) bate com o `<Picture 1>`/abertura da cena N+1; IDs de
   falantes, estados de objeto (barra de progresso / relógio), ambiente e figurino
   persistem.
+- **Continuista (§11.8):** para cada par adjacente (N→N+1), rode os 3 eixos da linha
+  de saída — direção de movimento (screen direction) igual ou reajustada; estados de
+  objeto/timeline somente para frente (fim N = início N+1); vestimenta/corpo e
+  referências (`<Picture 1>`, `<Picture 2>`) idênticos/consistentes. Qualquer divergência
+  vira uma linha ✗ no relatório.
 - **Checks mecânicos:** timestamps estritamente crescentes e dentro da duração
   declarada; todo `[Shot N]` presente e rotulado; blocos `<d>[Lang]` fechados e
   verbatim; rótulos de referência não redefinidos; seções na ordem; texto em cena
@@ -401,10 +448,10 @@ não no nome do arquivo.
 
 Entregue uma **tabela-resumo** do diretório inteiro, uma linha por cena:
 
-| CENA | Arquivo | Duração | Shots | Cadeia OK (ant→próx) | Rosto/`IDENTITY` | IDs de falante | Resultado |
-|------|---------|---------|-------|----------------------|------------------|-----------------|-----------|
-| CENA 1 | cena_00_prompt.txt | 12 s | 1 | — (início) | rosto | S1,S2 | ✅ / ⚠️ / ❌ |
-| CENA 2 | cena_01_prompt.txt | 12 s | 2 | ✅ | silhueta | S1,S2 | ✅ / ⚠️ / ❌ |
+| CENA | Arquivo | Duração | Shots | Cadeia OK (ant→próx) | Continuista N→N+1 (dir·timeline·figurino) | Rosto/`IDENTITY` | IDs de falante | Resultado |
+|------|---------|---------|-------|----------------------|---------------------------------------------|------------------|-----------------|-----------|
+| CENA 1 | cena_00_prompt.txt | 12 s | 1 | — (início) | — (sem anterior) | rosto | S1,S2 | ✅ / ⚠️ / ❌ |
+| CENA 2 | cena_01_prompt.txt | 12 s | 2 | ✅ | ✓ · ✓ · ✓ | silhueta | S1,S2 | ✅ / ⚠️ / ❌ |
 
 Conclua com:
 - **PASS** — toda cena passa no checklist da §13 e a cadeia entre cenas está limpa.

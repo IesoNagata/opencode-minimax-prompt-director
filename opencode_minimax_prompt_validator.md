@@ -304,6 +304,47 @@ rules prevent the most common defects:
 7. **Continuity labels** between scenes (connection map) to avoid duplicating a
    character or losing timeline objects.
 
+### 11.8 THE CONTINUISTA (continuity supervisor) — checking the prompt text
+
+A dedicated pass that, in the chained-prompt flow, plays the real-world role of a
+**continuista / script supervisor**: before any render it verifies — **from the
+text files alone** (the frames do not exist yet) — that CENA `N+1` continues CENA
+`N` behaviorally and physically. Three mandatory axes:
+
+**(a) Movement screen direction — "keeps walking the same way":**
+- If CENA `N` ends with the character (or camera) moving **screen-right**, CENA
+  `N+1` must open moving the **same direction**, or explicitly reset (fade/cut to a
+  new setup). Reversing with no warning makes the character "turn around" for no
+  reason.
+- Anchor the direction to a visible landmark declared once per beat (§5/§11) and,
+  in Shot 1 of CENA `N+1`, declare the continuity (e.g. "continuing his step to
+  the right that ended the previous scene").
+- One locomotion verb per scene; never return to a space already left (§11).
+- In an environment-change/title-card fade, the cut itself is the reset — the
+  direction may diverge only because the scene was recomposed, never mid-traversal.
+
+**(b) Object state / timeline — "never regresses" (reinforces §11 item 5):**
+- Any progress indicator (bar, clock, counter, gauge, percentage) at the **end of
+  CENA `N`** must be **equal** to the **start of CENA `N+1`**; afterwards it may
+  advance. Check every numeric mention in both texts.
+- List each persistent object with its state at **scene start and end** (connection
+  map) and confirm no value went backward or "jumped" in time.
+- A contradiction between the shot text and the `<Picture N>` (chain frame) has
+  caused "time going backward" — the prose and the reference must never diverge.
+
+**(c) Wardrobe / body / assets — "same clothes, same build, same refs":**
+- The wardrobe and body description must be **textually identical** across every
+  CENA in which the character appears; any drift (jacket color, beard, a vanished
+  prop) reads as another character.
+- `<Picture 1>` (face) is connected **only** when the face is recognizably
+  on-screen, and supplies **face only — never appears in-frame** (§9).
+- `<Picture 2>` (chain frame of CENA `N`) must be connected into CENA `N+1` and
+  match the previous scene's actual final **non-black** frame (§6).
+
+**Output of the pass** — per adjacent pair, one row:
+`N→N+1 | screen direction ✓/✗ | objects forward-only ✓/✗ | wardrobe/body identical ✓/✗ | chain frame referenced ✓/✗`.
+Any ✗ blocks the batch until corrected (§14.4).
+
 ---
 
 ## 12. Project workflow tips (opencode)
@@ -335,6 +376,7 @@ rules prevent the most common defects:
 - [ ] Exported final frame = `<Picture 2>` of the next scene (§6.3).
 - [ ] Transition map defined and respected (§6).
 - [ ] Physical continuity: one-way, no teleport, object persistence (§11).
+- [ ] **Continuista (§11.8):** screen direction equal or explicitly reset across adjacent pairs; object/timeline states forward-only; wardrobe/body identical; `<Picture 2>` referenced and matching the previous final non-black frame.
 - [ ] On-screen text in double quotes, verbatim (§10).
 
 ---
@@ -361,6 +403,11 @@ For each file in order, apply the §13 checklist. Within a single batch:
 - **Cross-scene continuity:** verify the chain — exported final frame of scene N
   (declared `<Picture 2>`) matches `<Picture 1>`/opening of scene N+1; speaker IDs,
   object states (progress bar / clock), environment, and wardrobe persist.
+- **Continuista (§11.8):** for each adjacent pair (N→N+1), run the three axes of
+  the output row — screen direction equal or explicitly reset; object/timeline
+  states forward-only (end N = start N+1); wardrobe/body and references
+  (`<Picture 1>`, `<Picture 2>`) identical/consistent. Any divergence becomes a
+  ✗ row in the report.
 - **Mechanical checks:** timestamps strictly increasing and within the declared
   duration; every `[Shot N]` present and labeled; `<d>[Lang]` blocks closed and
   verbatim; reference labels not redefined; sections in order; on-screen text in
@@ -398,10 +445,10 @@ filename.
 
 Deliver a **summary table** of the whole directory, one row per scene:
 
-| CENA | File | Duration | Shots | Chain OK (prev→next) | Face/`IDENTITY` | Speaker IDs | Result |
-|------|------|----------|-------|----------------------|------------------|-------------|--------|
-| CENA 1 | cena_00_prompt.txt | 12 s | 1 | — (start) | face | S1,S2 | ✅ / ⚠️ / ❌ |
-| CENA 2 | cena_01_prompt.txt | 12 s | 2 | ✅ | silhouette | S1,S2 | ✅ / ⚠️ / ❌ |
+| CENA | File | Duration | Shots | Chain OK (prev→next) | Continuista N→N+1 (dir·timeline·wardrobe) | Face/`IDENTITY` | Speaker IDs | Result |
+|------|------|----------|-------|----------------------|---------------------------------------------|------------------|-------------|--------|
+| CENA 1 | cena_00_prompt.txt | 12 s | 1 | — (start) | — (no previous) | face | S1,S2 | ✅ / ⚠️ / ❌ |
+| CENA 2 | cena_01_prompt.txt | 12 s | 2 | ✅ | ✓ · ✓ · ✓ | silhouette | S1,S2 | ✅ / ⚠️ / ❌ |
 
 Conclude with:
 - **PASS** — every scene passes the §13 checklist and the cross-scene chain is clean.

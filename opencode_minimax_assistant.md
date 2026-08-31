@@ -245,6 +245,30 @@ Dialogue never spans a CENA boundary mid-sentence; place each complete line in o
 
 Treat title card / credits / presentation text as a dedicated CENA (CENA 0 or final CENA), following T2VA handling (see Singleton format later) with visible text in double English quotes, verbatim.
 
+### 4.13 [LESSON] CONTINUITY SUPERVISOR (continuista) — movement, timeline & wardrobe discipline
+
+A dedicated continuity pass, run over the whole scene set before rendering, plays the role of a film's **script supervisor / continuista**: it verifies that every N+1 CENA is behaviorally and physically continuous with CENA N from the **prompt text alone** (frames are not yet rendered). Add this pass to the batch validation (§14.2 of the validator) so the director answers it **before** any render. Three axes:
+
+**(a) Screen direction / movement continuity [LESSON] — "keeps moving the same way":**
+- If CENA N ends with the character (or camera) moving **screen-right**, CENA N+1 must open moving the **same screen direction** or explicitly reset (fade/cut to a new setup). A reversal reads as the character "turning around" for no reason.
+- Anchor direction to a visible landmark stated once per beat (§12), and state continuation across the boundary in CENA N+1's Shot 1 (e.g. "continuing his step to the right that ended the previous scene").
+- One locomotion verb per scene/beat; no returning to a space already left (§12).
+- During a title-card or environment-change fade the reset is the cut itself — the chain frame's direction may diverge, but only because the shot is recomposed, never mid-traversal.
+
+**(b) Timeline / object state — "never regress" (extends §4.8):**
+- Any progress indicator, clock, counter, gauge or percentage at the END of CENA N must EQUAL its value at the START of CENA N+1, then it may advance. Check every numeric mention in both texts.
+- The continuista lists each persistent object with its **state at scene start and end** (already in the connection map, §4.9) and confirms no value went backwards or skipped backward in time.
+- A contradiction between the shot text and the connected `<Picture N>` (chain frame) caused a visible "time going backward" — never let the prose and the reference disagree.
+
+**(c) Wardrobe / body / asset fixity — "same clothes, same build, same refs":**
+- The character's wardrobe and body description must be **textually identical** across every CENA in which they appear (any drift — a jacket color, a beard, a missing prop — reads as a different character).
+- `<Picture 1>` (face reference) is connected ONLY where the face is recognizably on-screen, and it supplies **face only — never appears in-frame** (see §5.1 / §9).
+- `<Picture 2>` (chain frame of CENA N) must be connected into CENA N+1 and match the previous scene's actual final non-black frame (§6.3 / §7.1).
+
+**Output of the pass** — per adjacent pair, a row: `N→N+1 | screen-direction match ✓/✗ | object states forward-only ✓/✗ | wardrobe/body identical ✓/✗ | chain frame referenced ✓/✗`. Any ✗ blocks the batch until corrected (§14.4).
+
+**Checklist additions** (mark as **[CONT]** in the final validation, §16): verify the three axes above for every adjacent pair; the last row (final CENA) has no "next" — confirm its end state is stable and readable (§4.10).
+
 ---
 
 ## PART 5 — CHAIN CONTINUATION FORMAT (with environment reinf.) + [LESSON] faces
@@ -536,6 +560,7 @@ Before delivery, verify internally:
 - Every chained CENA starts exactly from the previous scene's final frame; summary/detailed_description/`<Picture>` initial states match with no contradiction or reversed transition.
 - Aspect ratio identical across scenes; chosen resolution recorded/reported in technical settings.
 - **Progress indicators never regress: end value of CENA N = start value of CENA N+1; numeric mentions agree with each other and with `<Picture>` [LESSON].**
+- **[CONT] Continuity supervisor pass run: screen direction matches or explicitly resets across every adjacent pair; object/timeline states forward-only; wardrobe/body textually identical; chain frame `<Picture 2>` referenced and matching the previous final non-black frame (§4.13).**
 - Environment anchors restated in every CENA (persistence); characters/clothing/objects/colors consistent.
 - **Face connected only when on-screen recognizable; distant silhouettes use the IDENTITY block; absent characters' faces not connected [LESSON].**
 - **lips-remain-closed clause ONLY on off-screen voice-over; on-screen lines use normal lip movement [LESSON].**
