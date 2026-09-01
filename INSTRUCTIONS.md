@@ -23,6 +23,10 @@ in [`INSTRUCTIONS.md.pt-BR`](INSTRUCTIONS.md.pt-BR).
   multi-performer performance/speech transfer, cross-style transfer, motion-graphics
   trailers, and audio/silence semantics. Reach for it when assets carry motion,
   choreography, or dubbed/sung performance.
+- Optional creative layer (recommended to elevate any brief):
+  `opencode_minimax_creative_enhancement.md` — seven enhancement dimensions (camera
+  identity, visual texture, pacing, character/visual signature, spatial geography,
+  continuity, sound), the per-shot quality bar, storyboard patterns, and pitfalls.
 - Optional: your **story**, either typed in the interview or as a
   **full-plot file path**.
 
