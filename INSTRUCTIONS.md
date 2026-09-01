@@ -14,6 +14,15 @@ in [`INSTRUCTIONS.md.pt-BR`](INSTRUCTIONS.md.pt-BR).
 - The two companion documents:
   - `opencode_minimax_assistant.md` — the prompt director (v6).
   - `opencode_minimax_prompt_validator.md` — the consistency checker.
+- Optional craft layer (recommended for anything dramatic/emotional):
+  `opencode_minimax_dramaturgy.md` — the film-craft rules (scene formula, details,
+  montage, staging) mapped onto MiniMax H3 syntax. Load it *before* the interview so the
+  director writes with dramaturgy in mind.
+- Optional advanced layer (for complex full-reference work):
+  `opencode_minimax_full_reference_advanced.md` — reference-type boundaries, exact
+  multi-performer performance/speech transfer, cross-style transfer, motion-graphics
+  trailers, and audio/silence semantics. Reach for it when assets carry motion,
+  choreography, or dubbed/sung performance.
 - Optional: your **story**, either typed in the interview or as a
   **full-plot file path**.
 
@@ -117,6 +126,15 @@ flow is:
 
 ```
 assistant (generates)  →  validator (reviews consistency)  →  render
+```
+
+For dramatic or emotional scenes, add the craft layer up front — the
+**dramaturgy** reference (`opencode_minimax_dramaturgy.md`) runs before the
+assistant so every shot is built on the scene formula, three-detail law and the
+five anchors, then the validator confirms the chain holds:
+
+```
+dramaturgy (craft)  →  assistant (generates)  →  validator (consistency)  →  render
 ```
 
 Repeat per scene. Validate, render, export the chain frame, and move on.
