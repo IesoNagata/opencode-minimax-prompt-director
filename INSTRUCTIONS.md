@@ -75,6 +75,11 @@ Two ways:
 - For multi-scene: one labeled code block per `CENA` + the **scene connection map**
   + **chain instructions** (export final frame, attach for next).
 - Every scene header carries `Technical settings` and `SCENE CONNECTIONS`.
+- **MP/resolution in the header is reference, not a hard value:** it is only used when
+  the workflow is submitted to the queue via comfy-mcp (it is the queued run's requested
+  size). When you copy/paste the prompt manually into ComfyUI, the resolution is set in a
+  dedicated node of the workflow — not by the header. The user chooses the tier in the
+  questionnaire (see assistant §1.1, §2.6).
 
 ---
 

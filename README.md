@@ -68,6 +68,14 @@ Ready-to-copy scene prompts live in [`examples/`](examples/):
 3. Build the prompt with the **assistant**, validate it with the **validator**,
    then render one scene at a time.
 
+> **Note on MP/resolution.** The megapixel/resolution ladder (e.g. `0.7 MP · 1152×640`)
+> that appears in scenes is a **suggested reference only** — the same ladder appears in
+> downloaded templates (Civitai, HuggingFace, tutorials, YouTube) with varied defaults.
+> The user decides the tier in the questionnaire, per preference. It matters **only when
+> the workflow is submitted to the queue via comfy-mcp** (it is the queued run's
+> requested size); on a manual copy/paste into ComfyUI, the resolution is set in the
+> workflow's own dedicated node, not by the scene header.
+
 ## Suggested usage
 
 ```

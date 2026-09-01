@@ -1,5 +1,5 @@
 === CENA 3 / 12 — INTERIOR, O INVESTIGADOR NO TRABALHO ===
-Technical settings: duration 12 seconds · aspect ratio 16:9 · resolution 0.7 MP (1152×640) · 24fps
+Technical settings: duration 12 seconds · aspect ratio 16:9 · resolution <definido pelo usuário no questionário> · 24fps
 CONEXÕES DA CENA: <Picture 1> = rosto (personagem.png) [CONECTADO] · <Picture 2> = chain frame CENA 2 [CONECTADO]
 — LINHA ABAIXO = PROMPT ENVIADO AO MODELO —
 

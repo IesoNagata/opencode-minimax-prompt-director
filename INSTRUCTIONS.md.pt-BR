@@ -63,6 +63,11 @@ Dois caminhos:
   de cena** + **instruções de encadeamento** (exportar quadro-final, anexar para a
   próxima).
 - Todo cabeçalho de cena traz `Technical settings` e `SCENE CONNECTIONS`.
+- **A MP/resolução no cabeçalho é referência, não um valor fixo:** ela só é usada quando
+  o workflow é enviado ao queue via comfy-mcp (é o tamanho solicitado na execução em
+  fila). Quando você cola o prompt manualmente no ComfyUI, a resolução é setada num nó
+  dedicado do workflow — não pelo cabeçalho. O usuário escolhe o tier no questionário
+  (ver assistant §1.1, §2.6).
 
 ---
 

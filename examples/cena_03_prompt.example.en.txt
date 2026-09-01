@@ -1,5 +1,5 @@
 === SCENE 3 / 12 — INTERIOR, THE INVESTIGATOR AT WORK ===
-Technical settings: duration 12 seconds · aspect ratio 16:9 · resolution 0.7 MP (1152×640) · 24fps
+Technical settings: duration 12 seconds · aspect ratio 16:9 · resolution <set by the user in the questionnaire> · 24fps
 SCENE CONNECTIONS: <Picture 1> = face (character.png) [CONNECTED] · <Picture 2> = chain frame SCENE 2 [CONNECTED]
 — LINE BELOW = PROMPT SENT TO THE MODEL —
 

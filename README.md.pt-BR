@@ -66,6 +66,14 @@ Prompts de cena prontos para copiar ficam em [`examples/`](examples/):
 3. Monte o prompt com o **assistant**, valide com o **validator**, depois renderize
    uma cena por vez.
 
+> **Nota sobre MP/resolução.** A escada de megapixels/resolução (ex.: `0.7 MP · 1152×640`)
+> que aparece nas cenas é **apenas referência sugerida** — a mesma escada aparece em
+> templates baixados (Civitai, HuggingFace, tutoriais, YouTube) com padrões variados.
+> Quem decide o tier é o usuário no questionário, conforme preferência. Ele importa
+> **apenas quando o workflow é enviado ao queue via comfy-mcp** (é o tamanho solicitado
+> na execução em fila); no copy/paste manual no ComfyUI, a resolução é setada no nó
+> dedicado do próprio workflow, não pelo cabeçalho da cena.
+
 ## Uso sugerido
 
 ```
