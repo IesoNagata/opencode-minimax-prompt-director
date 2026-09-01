@@ -83,6 +83,11 @@ curated by **Ieso Nagata (iesonagata [at] gmail [dot] com)**.
 
 **Watch the film** (generated end-to-end with this toolkit):
 
+<sub>Note: this is the **initial test** — the plot was not written out in detail, which
+led to scene/continuity inconsistencies before the enhancements later added to this
+toolkit (dramaturgy, continuity supervisor, creative enhancement, advanced
+full-reference).</sub>
+
 [![O Fio de Ariadne — a MiniMax H3 short film](https://img.youtube.com/vi/XgA_2ZJTqR4/0.jpg)](https://www.youtube.com/watch?v=XgA_2ZJTqR4)
 
 ## Official MiniMax H3 sources referenced
