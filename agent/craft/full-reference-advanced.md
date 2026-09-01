@@ -6,9 +6,9 @@
 > performer/facial-performance transfer** (multi-performer ownership, audio mapping,
 > cross-style preservation), **motion-graphics trailers**, refined **audio/silence
 > semantics**, asset-preparation guidance, and a **label-compliance audit**. It composes
-> with the existing files: `opencode_minimax_assistant.md` (structure + interview),
-> `opencode_minimax_prompt_validator.md` (consistency), and
-> `opencode_minimax_dramaturgy.md` (film craft).
+> with the existing files: `agent/prompt-director.md` (structure + interview),
+> `agent/validator.md` (consistency), and
+> `agent/craft/dramaturgy.md` (film craft).
 
 > **License & attribution.** This document is a **derivative** of the MiniMax H3
 > prompting reference in **[Square-Zero-Labs / video-prompting-skill](https://github.com/Square-Zero-Labs/video-prompting-skill)**,

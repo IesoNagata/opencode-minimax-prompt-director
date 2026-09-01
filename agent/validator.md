@@ -7,7 +7,9 @@
 > **Authorship & context.** This document was produced and refined over many hours
 > of interaction among multiple AI agents — **opencode**, **Gemini**, **ChatGPT** and
 > **Kilo-bin** — curated by **Ieso Nagata (iesonagata [at] gmail [dot] com)**. It consolidates
-> the MiniMax H3 prompt format and the opencode continuity rules.
+> the MiniMax H3 prompt format and the opencode continuity rules, and now also the
+> production-detail craft layer (timed audio beats, macro-impact physics, bokeh
+> framing, two-point color-temperature separation) carried by the assistant v6.1.
 > **Date:** 2026-08-30.
 
 This guide consolidates the official MiniMax instructions for **MiniMax-H3**
@@ -101,6 +103,24 @@ complete silence.
 ### 3.4 `non_diegetic_music` (1–3 sentences)
 Music only the audience hears. Focus on instrumentation, tempo, rhythm and
 dynamics — **avoid** abstract emotion adjectives. Use `N/A` if none.
+
+### 3.5 `timed_sound_beats` (optional production-detail layer)
+An optional synchronized-and-mixed SFX layer for sound design whose meaning lives in
+**timing or relative level** (slow-motion shots, precision SFX, Foley-heavy macro work).
+Consistent with the assistant's Part 10-A: one beat per line, instants either
+two-decimal seconds or event labels, monotonically forward, optional levels in dB.
+It belongs **alongside** `overall_soundscape` (continuous layer) and `non_diegetic_music`
+(score) — never replacing them, and never repeating dialogue or music. When the field
+is absent, `overall_soundscape` carries the full audio load as before.
+
+```
+timed_sound_beats:
+00.000–contact: faint room/stadium ambience at a low level
+contact: deep resonant low thud
+deformation: subtle material creak under compression
+release: soft whoosh of the object moving through air
+ejecta: faint organic crackle of debris lifting
+```
 
 ---
 
@@ -345,6 +365,27 @@ text files alone** (the frames do not exist yet) — that CENA `N+1` continues C
 `N→N+1 | screen direction ✓/✗ | objects forward-only ✓/✗ | wardrobe/body identical ✓/✗ | chain frame referenced ✓/✗`.
 Any ✗ blocks the batch until corrected (§14.4).
 
+### 11.9 Production-detail craft checks (macro / audio / composition)
+
+Applies the assistant v6.1 craft layer to a scene that uses it (macro/impact shots,
+precise SFX, night/depth composition). These are per-scene checks, reported alongside
+§13:
+
+- **Macro & impact physics (assistant Part 10-B):** on-entry state stated (action
+  already in progress); deformation sequence compression → peak → release → ejecta is
+  coherent and readable; ejecta is **sparse and natural unless explosive is the
+  intent**; surface interaction (compression, tearing, impressions left behind) is
+  recorded as persistent object state. ✗ when the deformation/pulse reads as
+  unmotivated, or ejecta is described as explosive without that intent.
+- **Bokeh / practical-lights-as-framing (Part 10-C):** when lights appear as framing,
+  it is stated as a composition statement (source + quality: soft, large, circles),
+  explicitly kept out of focus in the background, with a sharply defined foreground.
+  ✗ when bokeh is mixed into the lighting spec as illumination instead of framing.
+- **Two-point color-temperature separation (Part 10-D):** in night/contrast shots, a
+  cool (high) backlit source + warm (low) practical fill stated as a pair, with the
+  subject/background outcome (subject holds warm, background falls cool). ✗ when only a
+  single key color is given where the new rule applies.
+
 ---
 
 ## 12. Project workflow tips (opencode)
@@ -378,6 +419,8 @@ Any ✗ blocks the batch until corrected (§14.4).
 - [ ] Physical continuity: one-way, no teleport, object persistence (§11).
 - [ ] **Continuista (§11.8):** screen direction equal or explicitly reset across adjacent pairs; object/timeline states forward-only; wardrobe/body identical; `<Picture 2>` referenced and matching the previous final non-black frame.
 - [ ] On-screen text in double quotes, verbatim (§10).
+- [ ] **`timed_sound_beats` (when present): instants forward, no regression, no dialogue/music, dB levels when contrast matters, consistent with `overall_soundscape` (§3.5).**
+- [ ] **Production-detail craft (§11.9): macro/impact deformation sequence coherent with ejecta sparse (unless explosive intended); bokeh-as-framing stated as composition; two-point color temperature stated as a pair when night/contrast applies.**
 
 ---
 
@@ -411,9 +454,13 @@ For each file in order, apply the §13 checklist. Within a single batch:
 - **Mechanical checks:** timestamps strictly increasing and within the declared
   duration; every `[Shot N]` present and labeled; `<d>[Lang]` blocks closed and
   verbatim; reference labels not redefined; sections in order; on-screen text in
-  double quotes.
+  double quotes. **When `timed_sound_beats` is used, its instants must also be
+  monotonically forward and within the duration, and carry no dialogue/music (§3.5).**
 - **Structural:** `Technical settings` and `SCENE CONNECTIONS` header present with
   a duration that matches the `[Shot N]` timeline of that file.
+- **Production-detail (§11.9):** for scenes that use the craft layer, run the
+  macro/impact, bokeh-as-framing, and two-point color-temperature checks; report any
+  ✗ in the per-scene row.
 
 ### 14.3 Ask where to write any fixes, then produce a batch report
 

@@ -7,7 +7,10 @@
 > **Autoria e contexto.** Documento elaborado e aprimorado ao longo de horas de
 > interação com múltiplos agentes de IA — **opencode**, **Gemini**, **ChatGPT** e
 > **Kilo-bin** — sob curadoria de **Ieso Nagata (iesonagata [at] gmail [dot] com)**. Consolida o formato de prompt
-> MiniMax H3 e as regras de continuidade do fluxo opencode.
+> MiniMax H3 e as regras de continuidade do fluxo opencode, e agora também a camada
+> de craft de detalhe de produção (timed audio beats, física de macro/impacto,
+> bokeh-como-moldura, separação de dois pontos de temperatura de cor) carregada pelo
+> assistant v6.1.
 > **Data:** 30/08/2026.
 
 Este guia consolida as instruções oficiais da MiniMax para o modelo **MiniMax-H3**
@@ -100,6 +103,25 @@ Resumo da atmosfera e dos sons físicos (vento, chuva, passos, tecido, respiraç
 ### 3.4 `non_diegetic_music` (1–3 frases)
 Música que só a plateia ouve. Foque em instrumentação, andamento, ritmo e
 dinâmicas — **evite** adjetivos abstratos de emoção. Use `N/A` se não houver.
+
+### 3.5 `timed_sound_beats` (camada opcional de detalhe de produção)
+Uma camada SFX opcional, sincronizada e com mix, para design de som cujo sentido
+vive em **timing ou nível relativo** (shots em câmera lenta, SFX de precisão,
+trabalho foley pesado em macro). Consistente com a Parte 10-A do assistant: um beat
+por linha, instantes em segundos de duas casas ou rótulos de evento, monotônicos,
+com níveis opcionais em dB. Fica **ao lado** do `overall_soundscape` (camada
+contínua) e do `non_diegetic_music` (trilha) — nunca os substitui, e nunca repete
+diálogo ou música. Quando o campo está ausente, o `overall_soundscape` carrega todo
+o áudio como antes.
+
+```
+timed_sound_beats:
+00.000–contato: ruído fraco de ambiente de estádio/sala em nível baixo
+contato: baque baixo, denso e ressonante
+deformação: estalo sutil de couro sob compressão
+lançamento: whoosh suave do objeto cortando o ar
+ejecta: estalido orgânico fraco dos detritos se erguendo
+```
 
 ---
 
@@ -344,6 +366,28 @@ comportamental e fisicamente a CENA `N`. Três eixos obrigatórios:
 `N→N+1 | screen direction ✓/✗ | objetos forward-only ✓/✗ | vestimenta/corpo idênticos ✓/✗ | chain frame referenciado ✓/✗`.
 Qualquer ✗ **bloqueia o lote** até ser corrigido (§14.4).
 
+### 11.9 Checks de craft de detalhe de produção (macro / áudio / composição)
+
+Aplica a camada de craft do assistant v6.1 a uma cena que a utiliza (shots de
+macro/impacto, SFX de precisão, composição noturna/de profundidade). São checks por
+cena, reportados ao lado da §13:
+
+- **Física de macro & impacto (assistant Parte 10-B):** estado on-entry declarado
+  (ação já em andamento); a sequência de deformação compressão → pico → liberação →
+  ejecta é coerente e legível; ejecta é **esparso e natural a menos que explosivo seja
+  a intenção**; a interação de superfície (compressão, rasgo, impressões deixadas) é
+  registrada como estado de objeto persistente. ✗ quando a deformação/impulso parece
+  desmotivada, ou quando ejecta é descrito como explosivo sem essa intenção.
+- **Bokeh / luzes praticais como moldura (Parte 10-C):** quando luzes aparecem como
+  enquadramento, é declarado como afirmação de composição (fonte + qualidade: suaves,
+  grandes, círculos), explicitamente mantido fora de foco no fundo, com primeiro plano
+  bem definido. ✗ quando bokeh é misturado na especificação de iluminação como
+  iluminação em vez de moldura.
+- **Separação de dois pontos de temperatura de cor (Parte 10-D):** em cenas
+  noturnas/de contraste, uma fonte cool (alta) de backlight + fill quente de praticais
+  declarado como par, com o resultado sujeito/fundo (sujeito segura quente, fundo cai
+  frio). ✗ quando é dado apenas um tom-chave único onde a nova regra se aplica.
+
 ---
 
 ## 12. Dicas de fluxo de trabalho do projeto (opencode)
@@ -377,6 +421,8 @@ Qualquer ✗ **bloqueia o lote** até ser corrigido (§14.4).
 - [ ] Continuidade física: one-way, sem teletransporte, persistência de objetos (§11).
 - [ ] **Continuista (§11.8):** direção de movimento igual ou reajustada entre pares adjacentes; objetos/timeline forward-only; vestimenta/corpo idênticos; `<Picture 2>` referenciado e batendo com o último quadro não-preto da cena anterior.
 - [ ] Texto em cena entre aspas duplas, verbatim (§10).
+- [ ] **`timed_sound_beats` (quando presente): instantes para frente, sem regressão, sem diálogo/música, níveis em dB quando o contraste importa, consistente com `overall_soundscape` (§3.5).**
+- [ ] **Craft de detalhe de produção (§11.9): sequência de deformação de macro/impacto coerente com ejecta esparso (a menos que explosivo seja a intenção); bokeh-como-moldura declarado como composição; dois pontos de temperatura de cor declarados como par quando noturno/contraste se aplica.**
 
 ---
 
@@ -411,9 +457,13 @@ Para cada arquivo, em ordem, aplique o checklist da §13. Dentro de um mesmo lot
 - **Checks mecânicos:** timestamps estritamente crescentes e dentro da duração
   declarada; todo `[Shot N]` presente e rotulado; blocos `<d>[Lang]` fechados e
   verbatim; rótulos de referência não redefinidos; seções na ordem; texto em cena
-  entre aspas duplas.
+  entre aspas duplas. **Quando `timed_sound_beats` é usado, seus instantes também
+  devem ser monotônicos para frente e dentro da duração, e sem diálogo/música (§3.5).**
 - **Estrutural:** cabeçalho com `Technical settings` e `SCENE CONNECTIONS` presente,
   com uma duração que bate com a timeline dos `[Shot N]` daquele arquivo.
+- **Detalhe de produção (§11.9):** para cenas que usam a camada de craft, rode os
+  checks de macro/impacto, bokeh-como-moldura e dois pontos de temperatura de cor;
+  reporte qualquer ✗ na linha da cena.
 
 ### 14.3 Perguntar onde gravar as correções e produzir o relatório em lote
 

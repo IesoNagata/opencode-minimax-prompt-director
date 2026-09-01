@@ -1,0 +1,23 @@
+=== CENA 1 / 1 — MACRO, UM COPO DE VIDRO CAINDO E SE ESTILHAÇANDO SOBRE O BALCÃO ===
+Technical settings: duration 12 seconds · aspect ratio 2.39:1 (anamórfico) · resolution 21:9 (2560×1080) · 24fps
+CONEXÕES DA CENA: nenhuma — T2VA puro (tomada macro única e contínua, sem imagem de referência)
+— LINHA ABAIXO = PROMPT ENVIADO AO MODELO —
+
+integrated_multimodal_description:
+Ultra-slow-motion macro, live-action cinematográfico realista, valor de produção de longa-metragem, captado com lente macro 100mm em câmera de cinema, com tubo de extensão para close extremo, renderizado a 24fps. Grau teal-and-orange, grão de filme 35mm, emulação Kodak Vision3, halation nos practicais do bar. Iluminação: contraste de dois pontos — backlight frio 6500K de cima e de trás em registro retroiluminado; fill quente 3200K de praticais, das lâmpadas âmbar do bar e do brilho das garrafas no back-bar; o sujeito de vidro segura quente e claro enquanto o fundo cai em teal frio profundo; fill ambiente baixo sobre um fundo preto.
+
+O vídeo-alvo é uma única tomada macro contínua e travada, câmera estática a poucos centímetros da superfície polida e escura do balcão de madeira, levemente inclinada para cima. A ação já está em andamento desde o primeiro frame: um copo alto de vidro lapidado já está tombando da borda de um porta-copo redondo, iniciando a curta queda, com o líquido âmbar interior batendo contra a parede clara. O copo preenche o terço central do quadro, em foco nítido; atrás dele, as garrafas do back-bar e as luminárias pendentes aparecem como grandes círculos bokeh quentes e suaves contra a profundidade teal escura.
+
+[Shot 1] A câmera mantém um plano totalmente estático e travado durante toda a duração. Já em movimento desde o primeiro frame, o copo gira lentamente enquanto cai, o líquido interno comprimindo e esticando contra as paredes internas. O vidro desce em ritmo lento e contemplativo; ao tocar o tampo do balcão, a base golpeia primeiro, e a parede clara começa a se deformar — o ponto de impacto se achata e finas trincas correm para fora em filamentos ramificados através da superfície curva. O copo continua a queda, o vidro triturando e o aro dobrando; no momento de deformação máxima a parede inteira cede e o copo explode numa coroa lenta de cacos. Fragmentos e gotas do líquido âmbar se erguem e flutuam lentamente em arcos intrincados — ejecta esparso e natural, nunca explosivo — cada um captando o backlight frio como um ponto de luz; cacos maiores deslizam pela madeira polida, deixando rastros molhados e rasos. Algumas gotas se formam e rolam sobre a superfície escura, captando o fill quente dos praticais. A tomada termina em estado legível e de repouso: o vidro arruinado espalhado sobre a madeira, o líquido acumulado, as luzes bokeh firmes ao fundo.
+
+overall_soundscape: Quase silêncio durante a queda, com um murmúrio fraco de ruído de ambiente a nível muito baixo; o impacto como um baque baixo, denso e ressonante; a falha do vidro como um estalido rápido mas suavemente arredondado; os cacos deslizando como um tilintar cristalino leve; o líquido como um assentamento molhado e suave. Sem música.
+
+timed_sound_beats:
+00.000–impact: murmúrio fraco do ambiente do bar a nível muito baixo
+impact: baque baixo, denso e ressonante
+deformation: estalido cristalino e tenso das trincas ramificadas
+failure: burst suave e arredondado quando a parede cede
+ejecta: tilintar cristalino leve dos cacos sobre madeira polida
+settle: assentamento molhado e suave do líquido acumulado
+
+non_diegetic_music: N/A

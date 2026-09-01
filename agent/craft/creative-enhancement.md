@@ -6,10 +6,10 @@
 > generation is enhanced across seven dimensions (camera identity, visual texture,
 > pacing, character, spatial geography, continuity, sound) and then every shot is held
 > to a per-shot quality bar. Composes with the rest of the toolkit:
-> `opencode_minimax_assistant.md` (structure + interview),
-> `opencode_minimax_prompt_validator.md` (consistency),
-> `opencode_minimax_dramaturgy.md` (film craft), and
-> `opencode_minimax_full_reference_advanced.md` (advanced full-reference).
+> `agent/prompt-director.md` (structure + interview),
+> `agent/validator.md` (consistency),
+> `agent/craft/dramaturgy.md` (film craft), and
+> `agent/craft/full-reference-advanced.md` (advanced full-reference).
 
 > **License & attribution.** This document is a **derivative** of the
 > **[Minimax-H3-Prompt-AgentSkill](https://github.com/benjiyaya/Minimax-H3-Prompt-AgentSkill)**

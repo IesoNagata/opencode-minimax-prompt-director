@@ -1,0 +1,23 @@
+=== SCENE 1 / 1 — MACRO, A GLASS FALLING AND SHATTERING ON THE BAR ===
+Technical settings: duration 12 seconds · aspect ratio 2.39:1 (anamorphic) · resolution 21:9 (2560×1080) · 24fps
+SCENE CONNECTIONS: none — pure T2VA (single continuous macro shot, no reference image)
+— LINE BELOW = PROMPT SENT TO THE MODEL —
+
+integrated_multimodal_description:
+Ultra-slow-motion macro, cinematic live-action, feature-film production value shot with a macro 100mm lens on a cinema camera, extension tube for extreme close-up, rendered at 24fps. Teal-and-orange grade, 35mm film grain, Kodak Vision3 emulation, halation on the bar practicals. Lighting: cool 6500K backlight from above and behind in a backlit register; warm 3200K practical fill from the bar's amber lamps and bottled-liquor back-bar glow; the glass subject holds warm and bright while the background falls to deep cool teal; low ambient fill on a black surround.
+
+The target video is a single continuous locked-off macro shot, camera static a few centimeters above the polished dark wood bar surface, angled slightly upward. The action is already in progress from the first frame: a heavy cut-glass tumbler is already tipping off the edge of a round drink coaster, beginning its short fall, the amber liquid inside sloshing against the clear wall. The glass fills the central third of the frame, tack-sharp; behind it, the back-bar liquor bottles and hanging pendant lamps appear as large soft warm bokeh circles against the dark teal depth.
+
+[Shot 1] The camera holds a completely static locked shot for the full duration. Already in motion from the first frame, the tumbler rotates slowly as it falls, the liquid inside compressing and stretching against the inner walls. The glass descends at a leisurely slow-motion pace; on reaching the bar top the base strikes first, and the clear wall begins to deform — the point of impact flattens, fine cracks race outward in branching filaments across the curved surface. The glass continues its fall, ground glass grinding and the rim flexing; at the moment of maximum deformation the whole wall gives way and the tumbler bursts into a slow crown of shards. Fragments and droplets of amber liquid lift and drift upward slowly in intricate arcs — sparse, natural ejecta, never explosive — each catching the cool backlight as a pinpoint of light; larger shards skate across the polished wood, leaving shallow wet trails. A few droplets bead and roll on the dark surface, catching the warm practical fill. The shot ends settled and readable: the ruined glass spread on the wood, the liquid pooled, the bokeh lights steady behind.
+
+overall_soundscape: Near-silence through the fall with a faint room-tone murmur at a very low level; the impact as a low, dense, resonant thud; the glass failure as a rapid but softly rounded crackle; the shards skating as a light crystalline skitter; the liquid as a soft wet settle. No music.
+
+timed_sound_beats:
+00.000–impact: faint bar room-tone murmur at a very low level
+impact: dense low resonant thud
+deformation: tight crystalline crackle of branching fractures
+failure: soft rounded burst as the wall gives way
+ejecta: light crystalline skitter of shards on polished wood
+settle: soft wet settle of pooled liquid
+
+non_diegetic_music: N/A

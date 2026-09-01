@@ -2,7 +2,7 @@
 
 Step-by-step guide to load and use the **assistant** and **validator**, following
 the chained-scenes workflow. English original; a Portuguese version is available
-in [`INSTRUCTIONS.md.pt-BR`](INSTRUCTIONS.md.pt-BR).
+in [`INSTRUCTIONS.pt-BR.md`](INSTRUCTIONS.pt-BR.md).
 
 ---
 
@@ -12,19 +12,19 @@ in [`INSTRUCTIONS.md.pt-BR`](INSTRUCTIONS.md.pt-BR).
 - A text editor / agent runtime that can paste a long system prompt
   (**opencode**, any chat that supports system prompts, or a local model).
 - The two companion documents:
-  - `opencode_minimax_assistant.md` — the prompt director (v6).
-  - `opencode_minimax_prompt_validator.md` — the consistency checker.
+  - `agent/prompt-director.md` — the prompt director (v6).
+  - `agent/validator.md` — the consistency checker.
 - Optional craft layer (recommended for anything dramatic/emotional):
-  `opencode_minimax_dramaturgy.md` — the film-craft rules (scene formula, details,
+  `agent/craft/dramaturgy.md` — the film-craft rules (scene formula, details,
   montage, staging) mapped onto MiniMax H3 syntax. Load it *before* the interview so the
   director writes with dramaturgy in mind.
 - Optional advanced layer (for complex full-reference work):
-  `opencode_minimax_full_reference_advanced.md` — reference-type boundaries, exact
+  `agent/craft/full-reference-advanced.md` — reference-type boundaries, exact
   multi-performer performance/speech transfer, cross-style transfer, motion-graphics
   trailers, and audio/silence semantics. Reach for it when assets carry motion,
   choreography, or dubbed/sung performance.
 - Optional creative layer (recommended to elevate any brief):
-  `opencode_minimax_creative_enhancement.md` — seven enhancement dimensions (camera
+  `agent/craft/creative-enhancement.md` — seven enhancement dimensions (camera
   identity, visual texture, pacing, character/visual signature, spatial geography,
   continuity, sound), the per-shot quality bar, storyboard patterns, and pitfalls.
 - Optional: your **story**, either typed in the interview or as a
@@ -34,7 +34,7 @@ in [`INSTRUCTIONS.md.pt-BR`](INSTRUCTIONS.md.pt-BR).
 
 ## 1. Start the assistant
 
-1. Copy the **entire** content of `opencode_minimax_assistant.md` into your agent
+1. Copy the **entire** content of `agent/prompt-director.md` into your agent
    as the initial system/instruction message (or into the first chat turn).
 2. The assistant begins an **interview**. It follows:
    - Your **language** for the conversation.
@@ -87,7 +87,7 @@ Two ways:
 
 1. **Ask your agent to process the validator on the path where the generated
    prompts live** (e.g. `cenas-opencode/`) — no manual copy/paste: the agent applies
-   `opencode_minimax_prompt_validator.md` over the whole directory.
+   `agent/validator.md` over the whole directory.
 2. **Go through the quality checklist (§13)** and the rules it references, plus the
    cross-scene chain (§14).
 3. **Confirm:** shot timestamps, reference labels and chain frames, speaker IDs,
@@ -138,7 +138,7 @@ assistant (generates)  →  validator (reviews consistency)  →  render
 ```
 
 For dramatic or emotional scenes, add the craft layer up front — the
-**dramaturgy** reference (`opencode_minimax_dramaturgy.md`) runs before the
+**dramaturgy** reference (`agent/craft/dramaturgy.md`) runs before the
 assistant so every shot is built on the scene formula, three-detail law and the
 five anchors, then the validator confirms the chain holds:
 

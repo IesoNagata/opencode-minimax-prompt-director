@@ -28,30 +28,53 @@ continuity.
 
 ## What's inside
 
+```
+.
+├── agent/                       # the prompt-building systems (the core product)
+│   ├── prompt-director.md       #   interactive assistant (v6.1)
+│   ├── validator.md             #   consistency validator  (+ validator.pt-BR.md)
+│   └── craft/                   #   optional craft layers (load under demand)
+│       ├── dramaturgy.md
+│       ├── creative-enhancement.md
+│       └── full-reference-advanced.md
+├── docs/                        # step-by-step walkthrough (EN + PT)
+│   ├── INSTRUCTIONS.md
+│   └── INSTRUCTIONS.pt-BR.md
+├── examples/                    # ready-to-copy sample scene prompts (EN + PT)
+├── presentations/               # visual slide decks (EN + PT)
+├── workflows/                   # runnable ComfyUI workflows (ref stripped)
+│   └── minimax-h3-full-reference.scene.json
+├── index.html                   # entry redirect (GitHub Pages)
+├── README.md                    # this page
+├── README.pt-BR.md              # this page (PT)
+└── LICENSE
+```
+
 | File | Purpose |
 |------|---------|
-| `opencode_minimax_assistant.md` | **v6 prompt director.** An interactive assistant that builds a MiniMax H3 prompt dynamically, embedding parameters (`[PARAM]`) and lessons (`[LESSON]`) validated in production. It asks the interview in the user's language, offers possible examples, supports a full-plot file by path, and outputs a ready-to-send prompt. |
-| `opencode_minimax_prompt_validator.md` | A **generic validation guide** + checklist. Applies to any story/script. Covers modes, opening line, fields, shots, camera, transitions, full-reference sections, speakers, silhouette vs. face, on-screen text, physical continuity, and a per-scene quality checklist. PT: `opencode_minimax_prompt_validator.md.pt-BR`. |
-| `opencode_minimax_dramaturgy.md` | The **film-craft layer** (port of the `smixs/visual-skills` dramaturgy, CC BY 4.0): scene formula, three-detail law, three-jobs rule, Murch's Rule of Six, blocking/staging/camera/environment, three-layer storyboard, rhythm, five anchors — mapped onto MiniMax H3 syntax (REF2VA/T2VA) and reconciled with this repo's continuity rules. |
-| `opencode_minimax_full_reference_advanced.md` | The **advanced full-reference layer** (derived from `Square-Zero-Labs/video-prompting-skill`, Apache 2.0): reference-type boundaries (`<Subject>`/`<Picture>`/`<Video>`/`<Audio>`), motion-vs-camera relationship, exact multi-performer facial-performance transfer, cross-style transfer, motion-graphics trailers, audio/silence semantics, asset preparation, and a label-compliance audit. |
-| `opencode_minimax_creative_enhancement.md` | The **creative-enhancement layer** (derived from `benjiyaya/Minimax-H3-Prompt-AgentSkill`, MIT): mode classification, camera identity (incl. imperfections), visual texture, pacing arc, character detail + visual signature, spatial geography, continuity progression, sound design, per-shot quality bar, storyboard patterns, and common pitfalls. |
-| `INSTRUCTIONS.md` | Step-by-step usage — load the assistant, provide the story, set duration &amp; VRAM batch, generate, validate, render one scene at a time (+ troubleshooting). PT: `INSTRUCTIONS.md.pt-BR`. |
-| `presentation.html` | A visual slide deck (browser) for the project — how it works, modes, VRAM batching, continuity. PT: `presentation.pt-BR.html`. |
+| `agent/prompt-director.md` | **v6.1 prompt director.** An interactive assistant that builds a MiniMax H3 prompt dynamically, embedding parameters (`[PARAM]`), lessons (`[LESSON]`) and the production-detail craft layer (timed audio beats, macro-impact physics, bokeh framing, two-point color temperature). It asks the interview in the user's language, offers possible examples, supports a full-plot file by path, and outputs a ready-to-send prompt. |
+| `agent/validator.md` | A **generic validation guide** + checklist. Applies to any story/script. Covers modes, opening line, fields, shots, camera, transitions, full-reference sections, speakers, silhouette vs. face, on-screen text, physical continuity, the production-detail craft checks, and a per-scene quality checklist. PT: `agent/validator.pt-BR.md`. |
+| `agent/craft/dramaturgy.md` | The **film-craft layer** (port of the `smixs/visual-skills` dramaturgy, CC BY 4.0): scene formula, three-detail law, three-jobs rule, Murch's Rule of Six, blocking/staging/camera/environment, three-layer storyboard, rhythm, five anchors — mapped onto MiniMax H3 syntax (REF2VA/T2VA) and reconciled with this repo's continuity rules. |
+| `agent/craft/full-reference-advanced.md` | The **advanced full-reference layer** (derived from `Square-Zero-Labs/video-prompting-skill`, Apache 2.0): reference-type boundaries (`<Subject>`/`<Picture>`/`<Video>`/`<Audio>`), motion-vs-camera relationship, exact multi-performer facial-performance transfer, cross-style transfer, motion-graphics trailers, audio/silence semantics, asset preparation, and a label-compliance audit. |
+| `agent/craft/creative-enhancement.md` | The **creative-enhancement layer** (derived from `benjiyaya/Minimax-H3-Prompt-AgentSkill`, MIT): mode classification, camera identity (incl. imperfections), visual texture, pacing arc, character detail + visual signature, spatial geography, continuity progression, sound design, per-shot quality bar, storyboard patterns, and common pitfalls. |
+| `docs/INSTRUCTIONS.md` | Step-by-step usage — load the assistant, provide the story, set duration &amp; VRAM batch, generate, validate, render one scene at a time (+ troubleshooting). PT: `docs/INSTRUCTIONS.pt-BR.md`. |
+| `presentations/presentation.en.html` | A visual slide deck (browser) for the project — how it works, modes, VRAM batching, continuity. PT: `presentations/presentation.pt-BR.html`. |
 | `examples/` | Ready-to-copy sample scene prompts (EN + PT). |
-| `README.md.pt-BR` | Portuguese version of this page. |
+| `workflows/minimax-h3-full-reference.scene.json` | A stripped **ComfyUI workflow** used for full-reference (REF2VA) scene testing — the `PROMPT` field is blanked and loaded reference images are emptied so it carries no user data. Pair with the prompt built by the assistant for your scene. |
+| `README.pt-BR.md` | Portuguese version of this page. |
 | `LICENSE` | CC BY 4.0 license and attribution notice. |
 
 ## Quickstart
 
-1. Copy [`opencode_minimax_assistant.md`](opencode_minimax_assistant.md) into your
+1. Copy [`agent/prompt-director.md`](agent/prompt-director.md) into your
    agent as the system prompt and answer the interview.
 2. Provide your story (inline or by file), pick a duration, and confirm the VRAM
    batch split.
 3. After generating, ask your agent to run the
-   [`opencode_minimax_prompt_validator.md`](opencode_minimax_prompt_validator.md)
+   [`agent/validator.md`](agent/validator.md)
    on the directory that holds your prompts before rendering.
 
-See [`INSTRUCTIONS.md`](INSTRUCTIONS.md) for the full walkthrough.
+See [`docs/INSTRUCTIONS.md`](docs/INSTRUCTIONS.md) for the full walkthrough.
 
 ## Examples
 
@@ -59,6 +82,10 @@ Ready-to-copy scene prompts live in [`examples/`](examples/):
 
 - `examples/cena_03_prompt.example.en.txt` — a chained I2VA scene (English).
 - `examples/cena_03_prompt.example.pt-BR.txt` — the same scene (Portuguese).
+- `examples/cena_prod_detail.example.en.txt` — a production-detail T2VA macro scene
+  demonstrating the v6.1 craft layer: timed sound beats, macro/impact physics,
+  bokeh-as-framing and two-point color-temperature separation (English).
+- `examples/cena_prod_detail.example.pt-BR.txt` — the same scene (Portuguese).
 
 ## The chained workflow (core idea)
 
@@ -108,23 +135,23 @@ full-reference).</sub>
 
 This project is available in **English** and **Brazilian Portuguese**:
 
-- **English:** `README.md`, `INSTRUCTIONS.md`, `opencode_minimax_prompt_validator.md`,
-  `examples/*.en.txt`, `presentation.html`
-- **Português (BR):** `README.md.pt-BR`, `INSTRUCTIONS.md.pt-BR`,
-  `opencode_minimax_prompt_validator.md.pt-BR`, `examples/*.pt-BR.txt`,
-  `presentation.pt-BR.html`, and the `opencode_minimax_assistant.md` interviews you
-  in your own language.
+- **English:** `README.md`, `docs/INSTRUCTIONS.md`, `agent/validator.md`,
+  `examples/*.en.txt`, `presentations/presentation.en.html`
+- **Português (BR):** `README.pt-BR.md`, `docs/INSTRUCTIONS.pt-BR.md`,
+  `agent/validator.pt-BR.md`, `examples/*.pt-BR.txt`,
+  `presentations/presentation.pt-BR.html`, and the `agent/prompt-director.md` interviews
+  you in your own language.
 
 ## Resources
 
 Skill repositories whose content was adapted into this toolkit (with attribution kept):
 
 - [`smixs/visual-skills`](https://github.com/smixs/visual-skills) — **CC BY 4.0**
-  source of `opencode_minimax_dramaturgy.md` (scene formula, Murch's Rule of Six,
+  source of `agent/craft/dramaturgy.md` (scene formula, Murch's Rule of Six,
   blocking/staging, rhythm, five anchors).
 - [`Square-Zero-Labs/video-prompting-skill`](https://github.com/Square-Zero-Labs/video-prompting-skill) — **Apache 2.0**
-  source of `opencode_minimax_full_reference_advanced.md` (reference-type boundaries,
+  source of `agent/craft/full-reference-advanced.md` (reference-type boundaries,
   multi-performer facial transfer, motion-graphics, audio semantics).
 - [`benjiyaya/Minimax-H3-Prompt-AgentSkill`](https://github.com/benjiyaya/Minimax-H3-Prompt-AgentSkill) — **MIT**
-  source of `opencode_minimax_creative_enhancement.md` (seven creative dimensions,
+  source of `agent/craft/creative-enhancement.md` (seven creative dimensions,
   per-shot quality bar, storytelling/action patterns, pitfalls).

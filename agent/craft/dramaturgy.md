@@ -4,12 +4,12 @@
 > `smixs/visual-skills` project (an AI film-director skill set for agents) and maps it
 > onto the **MiniMax H3** prompt format this repository already uses (T2VA / I2VA /
 > FL2VA / L2VA / REF2VA chained scenes). It teaches the *craft* — how films are actually
-> built — that the existing `opencode_minimax_assistant.md` (structure) and
-> `opencode_minimax_prompt_validator.md` (consistency) do not cover. Read this file
+> built — that the existing `agent/prompt-director.md` (structure) and
+> `agent/validator.md` (consistency) do not cover. Read this file
 > together with those two: the craft here, the format there.
 >
 > **What it does not replace.** The model-specific syntax lives in
-> `opencode_minimax_assistant.md` (the six REF2VA sections, `subject_definitions`,
+> `agent/prompt-director.md` (the six REF2VA sections, `subject_definitions`,
 > `retention_analysis`, `<Picture N>` tags, dialogue `<d>[Lang]</d>`, `overall_soundscape`,
 > `non_diegetic_music`, the chain-frames discipline, fade-as-cut). This file is the
 > layer that runs *before* any of that — first decide the story is cinematic, then

@@ -12,8 +12,8 @@ inglês está em [`INSTRUCTIONS.md`](INSTRUCTIONS.md).
 - Um editor / runtime de agente capaz de colar um prompt de sistema longo
   (**opencode**, qualquer chat que aceite prompt de sistema, ou um modelo local).
 - Os dois documentos complementares:
-  - `opencode_minimax_assistant.md` — o director de prompts (v6).
-  - `opencode_minimax_prompt_validator.md` — o verificador de consistência.
+  - `agent/prompt-director.md` — o director de prompts (v6).
+  - `agent/validator.md` — o verificador de consistência.
 - Opcional: sua **trama**, digitada na entrevista ou como **path de arquivo de
   trama completo**.
 
@@ -21,7 +21,7 @@ inglês está em [`INSTRUCTIONS.md`](INSTRUCTIONS.md).
 
 ## 1. Inicie o assistant
 
-1. Copie o **conteúdo inteiro** de `opencode_minimax_assistant.md` para o seu
+1. Copie o **conteúdo inteiro** de `agent/prompt-director.md` para o seu
    agente como mensagem inicial de sistema/instrução (ou no primeiro turno do chat).
 2. O assistant começa uma **entrevista**. Ele segue:
    - Seu **idioma** para a conversa.
@@ -75,7 +75,7 @@ Dois caminhos:
 
 1. **Peça ao seu agente que processe o validator no path onde estão os prompts
    gerados** (ex.: `cenas-opencode/`) — nada de copiar/colar manualmente: o agente
-   aplica o `opencode_minimax_prompt_validator.md` sobre o diretório inteiro.
+   aplica o `agent/validator.md` sobre o diretório inteiro.
 2. **Passe pelo checklist de qualidade (§13)** e pelas regras que ele referencia,
    além da cadeia entre cenas (§14).
 3. **Confirme:** timestamps de shots, rótulos de referência e chain frames, IDs de
