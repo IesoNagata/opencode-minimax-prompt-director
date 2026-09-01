@@ -24,6 +24,7 @@ continuity.
 - [Provenance](#provenance)
 - [Official MiniMax H3 sources referenced](#official-minimax-h3-sources-referenced)
 - [Languages](#languages)
+- [Resources](#resources)
 
 ## What's inside
 
@@ -113,3 +114,17 @@ This project is available in **English** and **Brazilian Portuguese**:
   `opencode_minimax_prompt_validator.md.pt-BR`, `examples/*.pt-BR.txt`,
   `presentation.pt-BR.html`, and the `opencode_minimax_assistant.md` interviews you
   in your own language.
+
+## Resources
+
+Skill repositories whose content was adapted into this toolkit (with attribution kept):
+
+- [`smixs/visual-skills`](https://github.com/smixs/visual-skills) — **CC BY 4.0**
+  source of `opencode_minimax_dramaturgy.md` (scene formula, Murch's Rule of Six,
+  blocking/staging, rhythm, five anchors).
+- [`Square-Zero-Labs/video-prompting-skill`](https://github.com/Square-Zero-Labs/video-prompting-skill) — **Apache 2.0**
+  source of `opencode_minimax_full_reference_advanced.md` (reference-type boundaries,
+  multi-performer facial transfer, motion-graphics, audio semantics).
+- [`benjiyaya/Minimax-H3-Prompt-AgentSkill`](https://github.com/benjiyaya/Minimax-H3-Prompt-AgentSkill) — **MIT**
+  source of `opencode_minimax_creative_enhancement.md` (seven creative dimensions,
+  per-shot quality bar, storytelling/action patterns, pitfalls).

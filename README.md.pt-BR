@@ -24,6 +24,7 @@ tecnicamente corretos para **MiniMax H3** (T2VA / I2VA / FL2VA / L2VA e
 - [Procedência](#procedência)
 - [Fontes oficiais MiniMax H3 referenciadas](#fontes-oficiais-minimax-h3-referenciadas)
 - [Idiomas](#idiomas)
+- [Recursos](#recursos)
 
 ## O que contém
 
@@ -111,6 +112,20 @@ Este projeto está disponível em **inglês** e **português (Brasil)**:
   `opencode_minimax_prompt_validator.md.pt-BR`, `examples/*.pt-BR.txt`,
   `presentation.pt-BR.html`, e o `opencode_minimax_assistant.md` que entrevista você
   no seu próprio idioma.
+
+## Recursos
+
+Repositórios de skills cujo conteúdo foi adaptado a este kit (com atribuição mantida):
+
+- [`smixs/visual-skills`](https://github.com/smixs/visual-skills) — **CC BY 4.0**
+  fonte de `opencode_minimax_dramaturgy.md` (fórmula de cena, Regra dos Seis de Murch,
+  bloqueio/staging, ritmo, cinco âncoras).
+- [`Square-Zero-Labs/video-prompting-skill`](https://github.com/Square-Zero-Labs/video-prompting-skill) — **Apache 2.0**
+  fonte de `opencode_minimax_full_reference_advanced.md` (limites de tipo de referência,
+  transferência facial multi-intérprete, motion-graphics, semântica de áudio).
+- [`benjiyaya/Minimax-H3-Prompt-AgentSkill`](https://github.com/benjiyaya/Minimax-H3-Prompt-AgentSkill) — **MIT**
+  fonte de `opencode_minimax_creative_enhancement.md` (sete dimensões criativas,
+  per-shot quality bar, storytelling/action patterns, pitfalls).
 
 ---
 
