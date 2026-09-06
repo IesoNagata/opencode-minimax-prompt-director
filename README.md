@@ -33,6 +33,7 @@ continuity.
 ├── agent/                       # the prompt-building systems (the core product)
 │   ├── prompt-director.md       #   interactive assistant (v6.1)
 │   ├── validator.md             #   consistency validator  (+ validator.pt-BR.md)
+│   ├── maestro-queue-reference.md   #  Maestro queue schema + practical guide (+ .pt-BR.md)
 │   └── craft/                   #   optional craft layers (load under demand)
 │       ├── dramaturgy.md
 │       ├── creative-enhancement.md
@@ -54,6 +55,7 @@ continuity.
 |------|---------|
 | `agent/prompt-director.md` | **v6.1 prompt director.** An interactive assistant that builds a MiniMax H3 prompt dynamically, embedding parameters (`[PARAM]`), lessons (`[LESSON]`) and the production-detail craft layer (timed audio beats, macro-impact physics, bokeh framing, two-point color temperature). It asks the interview in the user's language, offers possible examples, supports a full-plot file by path, and outputs a ready-to-send prompt. |
 | `agent/validator.md` | A **generic validation guide** + checklist. Applies to any story/script. Covers modes, opening line, fields, shots, camera, transitions, full-reference sections, speakers, silhouette vs. face, on-screen text, physical continuity, the production-detail craft checks, and a per-scene quality checklist. PT: `agent/validator.pt-BR.md`. |
+| `agent/maestro-queue-reference.md` | **Maestro queue schema reference + practical guide.** How to read and interpret the live `_director_queue.json` the Maestro director writes during a music-video render: entry status, `planned_clips` / `prepared_clip_plans` schema, section labels, energy, continuity strategy, `video_params` (steps, attention, turbo preset), how to map MP4s to clips, predict render time, and audit what the model received via `_director_h3_compiled_prompt`. PT: `agent/maestro-queue-reference.pt-BR.md`. |
 | `agent/craft/dramaturgy.md` | The **film-craft layer** (port of the `smixs/visual-skills` dramaturgy, CC BY 4.0): scene formula, three-detail law, three-jobs rule, Murch's Rule of Six, blocking/staging/camera/environment, three-layer storyboard, rhythm, five anchors — mapped onto MiniMax H3 syntax (REF2VA/T2VA) and reconciled with this repo's continuity rules. |
 | `agent/craft/full-reference-advanced.md` | The **advanced full-reference layer** (derived from `Square-Zero-Labs/video-prompting-skill`, Apache 2.0): reference-type boundaries (`<Subject>`/`<Picture>`/`<Video>`/`<Audio>`), motion-vs-camera relationship, exact multi-performer facial-performance transfer, cross-style transfer, motion-graphics trailers, audio/silence semantics, asset preparation, and a label-compliance audit. |
 | `agent/craft/creative-enhancement.md` | The **creative-enhancement layer** (derived from `benjiyaya/Minimax-H3-Prompt-AgentSkill`, MIT): mode classification, camera identity (incl. imperfections), visual texture, pacing arc, character detail + visual signature, spatial geography, continuity progression, sound design, per-shot quality bar, storyboard patterns, and common pitfalls. |
@@ -136,9 +138,11 @@ full-reference).</sub>
 This project is available in **English** and **Brazilian Portuguese**:
 
 - **English:** `README.md`, `docs/INSTRUCTIONS.md`, `agent/validator.md`,
-  `examples/*.en.txt`, `presentations/presentation.en.html`
+  `agent/maestro-queue-reference.md`, `examples/*.en.txt`,
+  `presentations/presentation.en.html`
 - **Português (BR):** `README.pt-BR.md`, `docs/INSTRUCTIONS.pt-BR.md`,
-  `agent/validator.pt-BR.md`, `examples/*.pt-BR.txt`,
+  `agent/validator.pt-BR.md`, `agent/maestro-queue-reference.pt-BR.md`,
+  `examples/*.pt-BR.txt`,
   `presentations/presentation.pt-BR.html`, and the `agent/prompt-director.md` interviews
   you in your own language.
 
@@ -155,3 +159,8 @@ Skill repositories whose content was adapted into this toolkit (with attribution
 - [`benjiyaya/Minimax-H3-Prompt-AgentSkill`](https://github.com/benjiyaya/Minimax-H3-Prompt-AgentSkill) — **MIT**
   source of `agent/craft/creative-enhancement.md` (seven creative dimensions,
   per-shot quality bar, storytelling/action patterns, pitfalls).
+- [`Blizaine/Maestro`](https://github.com/Blizaine/Maestro) — **WanGP Non-Commercial
+  Evaluation License 1.1** (upstream: `deepbeepmeep/Wan2GP`). Source of the
+  `_director_queue.json` format documented in `agent/maestro-queue-reference.md` (its
+  live queue schema, `planned_clips` / `prepared_clip_plans` structure). This doc
+  describes the schema as facts; it does not redistribute Maestro code or weights.

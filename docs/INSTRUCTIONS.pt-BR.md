@@ -14,6 +14,17 @@ inglês está em [`INSTRUCTIONS.md`](INSTRUCTIONS.md).
 - Os dois documentos complementares:
   - `agent/prompt-director.md` — o director de prompts (v6).
   - `agent/validator.md` — o verificador de consistência.
+- Camadas opcionais (carregue sob demanda, *antes* da entrevista):
+  - `agent/craft/dramaturgy.md` — regras de craft de filme mapeadas na sintaxe MiniMax H3.
+  - `agent/craft/full-reference-advanced.md` — referência completa avançada
+    (múltiplos intérpretes, transferência de performance, trailers de motion-graphics).
+  - `agent/craft/creative-enhancement.md` — sete dimensões de aprimoramento criativo.
+  - `agent/maestro-queue-reference.md` — para trabalhar a partir de uma **fila music_video
+    do Maestro** (ou minerar um render como referência): lê o `_director_queue.json` tanto
+    como **log operacional** (acompanhar progresso, prever tempos, auditar o que o modelo
+    recebeu) quanto como **corpus criativo + técnico** (estrutura, invariantes, ritmo,
+    configurações de inferência). Ao minerar, passe o caminho da fila e os índices de clip
+    que ilustram o tipo de seção que você vai escrever.
 - Opcional: sua **trama**, digitada na entrevista ou como **path de arquivo de
   trama completo**.
 

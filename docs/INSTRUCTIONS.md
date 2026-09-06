@@ -27,6 +27,13 @@ in [`INSTRUCTIONS.pt-BR.md`](INSTRUCTIONS.pt-BR.md).
   `agent/craft/creative-enhancement.md` — seven enhancement dimensions (camera
   identity, visual texture, pacing, character/visual signature, spatial geography,
   continuity, sound), the per-shot quality bar, storyboard patterns, and pitfalls.
+- Optional Maestro layer (when working from a **Maestro music_video queue**, or a
+  music-video render to mine as reference): `agent/maestro-queue-reference.md` — reads a
+  `_director_queue.json` both as an **operational log** (track progress, predict render
+  times, audit what the model actually received) and as a **creative + technical corpus**
+  for the prompt-director (structure, invariants, pacing, inference settings). Load it
+  *before* the interview when mining an existing queue; pass the queue path and the clip
+  indices that illustrate the section type you are about to write.
 - Optional: your **story**, either typed in the interview or as a
   **full-plot file path**.
 

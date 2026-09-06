@@ -337,7 +337,7 @@
       "widgets_values": {
         "frame_rate": 24,
         "loop_count": 0,
-        "filename_prefix": "rtx5070/",
+        "filename_prefix": "minimax-h3-scene/",
         "format": "video/h264-mp4",
         "pix_fmt": "yuv420p",
         "crf": 19,
@@ -358,7 +358,7 @@
       "widgets_values_named": {
         "frame_rate": 24,
         "loop_count": 0,
-        "filename_prefix": "rtx5070/",
+        "filename_prefix": "minimax-h3-scene/",
         "format": "video/h264-mp4",
         "pix_fmt": "yuv420p",
         "crf": 19,
@@ -1035,10 +1035,10 @@
         "Node name for S&R": "SaveImage"
       },
       "widgets_values": [
-        "rtx5070/last"
+        "minimax-h3-scene/last"
       ],
       "widgets_values_named": {
-        "filename_prefix": "rtx5070/last"
+        "filename_prefix": "minimax-h3-scene/last"
       }
     },
     {

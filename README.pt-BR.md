@@ -33,6 +33,7 @@ tecnicamente corretos para **MiniMax H3** (T2VA / I2VA / FL2VA / L2VA e
 ├── agent/                       # os sistemas que montam prompts (o produto central)
 │   ├── prompt-director.md       #   assistente interativo (v6.1)
 │   ├── validator.md             #   validador de consistência  (+ validator.pt-BR.md)
+│   ├── maestro-queue-reference.md   #  schema da fila do Maestro + guia prático (+ .pt-BR.md)
 │   └── craft/                   #   camadas de craft opcionais (carregar sob demanda)
 │       ├── dramaturgy.md
 │       ├── creative-enhancement.md
@@ -54,6 +55,7 @@ tecnicamente corretos para **MiniMax H3** (T2VA / I2VA / FL2VA / L2VA e
 |---------|-----------|
 | `agent/prompt-director.md` | **Director de prompts v6.1.** Um assistente interativo que monta o prompt MiniMax H3 dinamicamente, incorporando parâmetros (`[PARAM]`), lições (`[LESSON]`) e a camada de craft de detalhe de produção (timed audio beats, física de macro/impacto, bokeh-como-moldura, dois pontos de temperatura de cor). Entrevista no idioma do usuário, oferece exemplos possíveis, aceita um arquivo de trama completo por caminho e gera um prompt pronto para enviar. |
 | `agent/validator.md` | Um **guia genérico de validação** + checklist. Aplica-se a qualquer trama/roteiro. Cobre modos, linha de abertura, campos, shots, câmera, transições, seções full-reference, falantes, silhueta vs. rosto, texto em cena, continuidade física, os checks de craft de detalhe de produção e um checklist de qualidade por cena. PT: `agent/validator.pt-BR.md`. |
+| `agent/maestro-queue-reference.pt-BR.md` | **Referência de schema da fila do Maestro + guia prático.** Como ler e interpretar o `_director_queue.json` vivo que o director do Maestro grava durante o render de um videoclipe: status da entrada, schema de `planned_clips` / `prepared_clip_plans`, rótulos de seção, energia, estratégia de continuidade, `video_params` (passos, atenção, preset turbo), como mapear MP4s aos clips, prever tempo de render e auditar o que o modelo recebeu via `_director_h3_compiled_prompt`. EN: `agent/maestro-queue-reference.md`. |
 | `agent/craft/dramaturgy.md` | A **camada de craft cinematográfico** (porta do `smixs/visual-skills` dramaturgy, CC BY 4.0): fórmula de cena, lei dos três detalhes, regra dos três trabalhos, Regra dos Seis de Murch, blocking/staging/câmera/ambiente, storyboard de três camadas, ritmo, cinco âncoras — mapeada na sintaxe MiniMax H3 (REF2VA/T2VA) e reconciliada com as regras de continuidade deste repositório. |
 | `agent/craft/full-reference-advanced.md` | A **camada avançada de full-reference** (derivada de `Square-Zero-Labs/video-prompting-skill`, Apache 2.0): limites de tipo de referência (`<Subject>`/`<Picture>`/`<Video>`/`<Audio>`), relação movimento-vs-câmera, transferência exata de performance facial multi-intérprete, transferência entre estilos, trailers de motion-graphics, semântica de áudio/silêncio, preparação de assets e auditoria de conformidade de rótulos. |
 | `agent/craft/creative-enhancement.md` | A **camada de aprimoramento criativo** (derivada de `benjiyaya/Minimax-H3-Prompt-AgentSkill`, MIT): classificação de modo, identidade de câmera (incl. imperfeições), textura visual, arco de ritmo, detalhe de personagem + assinatura visual, geografia espacial, progressão de continuidade, design de som, per-shot quality bar, padrões de storyboard e pitfalls comuns. |
@@ -136,9 +138,11 @@ completa avançada).</sub>
 Este projeto está disponível em **inglês** e **português (Brasil)**:
 
 - **English:** `README.md`, `docs/INSTRUCTIONS.md`, `agent/validator.md`,
-  `examples/*.en.txt`, `presentations/presentation.en.html`
+  `agent/maestro-queue-reference.md`, `examples/*.en.txt`,
+  `presentations/presentation.en.html`
 - **Português (BR):** `README.pt-BR.md`, `docs/INSTRUCTIONS.pt-BR.md`,
-  `agent/validator.pt-BR.md`, `examples/*.pt-BR.txt`,
+  `agent/validator.pt-BR.md`, `agent/maestro-queue-reference.pt-BR.md`,
+  `examples/*.pt-BR.txt`,
   `presentations/presentation.pt-BR.html`, e o `agent/prompt-director.md` que entrevista você
   no seu próprio idioma.
 
@@ -155,6 +159,11 @@ Repositórios de skills cujo conteúdo foi adaptado a este kit (com atribuição
 - [`benjiyaya/Minimax-H3-Prompt-AgentSkill`](https://github.com/benjiyaya/Minimax-H3-Prompt-AgentSkill) — **MIT**
   fonte de `agent/craft/creative-enhancement.md` (sete dimensões criativas,
   per-shot quality bar, storytelling/action patterns, pitfalls).
+- [`Blizaine/Maestro`](https://github.com/Blizaine/Maestro) — **WanGP Non-Commercial
+  Evaluation License 1.1** (upstream: `deepbeepmeep/Wan2GP`). Fonte do formato
+  `_director_queue.json` documentado em `agent/maestro-queue-reference.pt-BR.md` (o
+  schema da fila viva, estrutura de `planned_clips` / `prepared_clip_plans`). Este doc
+  descreve o schema como fatos; não redistribui código nem pesos do Maestro.
 
 ---
 
